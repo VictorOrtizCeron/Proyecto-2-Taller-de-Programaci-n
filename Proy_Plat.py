@@ -17,7 +17,7 @@ class Game:
         # start a new game
         self.all_sprites = pg.sprite.Group()
         self.platforms = pg.sprite.Group()
-        self.player = Player()
+        self.player = Player(self)
         self.all_sprites.add(self.player)
         p1 = Platform(0, HEIGHT - 40, WIDTH, 40)
         self.all_sprites.add(p1)
@@ -52,6 +52,9 @@ class Game:
                 if self.playing:
                     self.playing = False
                 self.running = False
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:
+                    self.player.jump()
 
     def draw(self):
         # Game Loop - draw
