@@ -24,7 +24,7 @@ reproductor = vlc.MediaPlayer()
 
 #Es una funcion que encuentra una imagen utilizando su dirección relativa en el directorio, y la retorna.
 def cargar_img(nombre):
-    ruta  = path.join('elementos/', nombre)
+    ruta  = path.join('Assets/', nombre)
     img=PhotoImage(file=ruta)
     return img
 
