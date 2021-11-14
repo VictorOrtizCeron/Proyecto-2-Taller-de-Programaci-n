@@ -1,50 +1,77 @@
-import pygame
+import pygame as pg
 import random
+from settings import *
+from sprites import *
 
-from pygame.constants import BLEND_MULT
+class Game:
+    def __init__(self):
+        # initialize game window, etc
+        pg.init()
+        pg.mixer.init()
+        self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        pg.display.set_caption(TITLE)
+        self.clock = pg.time.Clock()
+        self.running = True
 
-WIDTH = 800
-HEIGHT = 600
-FPS = 30
+    def new(self):
+        # start a new game
+        self.all_sprites = pg.sprite.Group()
+        self.platforms = pg.sprite.Group()
+        self.player = Player()
+        self.all_sprites.add(self.player)
+        p1 = Platform(0, HEIGHT - 40, WIDTH, 40)
+        self.all_sprites.add(p1)
+        self.platforms.add(p1)
+        p2 = Platform(WIDTH / 2 - 50, HEIGHT * 3 / 4, 100, 20)
+        self.all_sprites.add(p2)
+        self.platforms.add(p2)
+        self.run()
 
-#definicion de colores utiles
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+    def run(self):
+        # Game Loop
+        self.playing = True
+        while self.playing:
+            self.clock.tick(FPS)
+            self.events()
+            self.update()
+            self.draw()
 
-#initialize pygame and create window
-pygame.init()
-pygame.mixer.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Mrrp")
-clock = pygame.time.Clock()
+    def update(self):
+        # Game Loop - Update
+        self.all_sprites.update()
+        hits = pg.sprite.spritecollide(self.player, self.platforms, False)
+        if hits:
+            self.player.pos.y = hits[0].rect.top
+            self.player.vel.y = 0
 
+    def events(self):
+        # Game Loop - events
+        for event in pg.event.get():
+            # check for closing window
+            if event.type == pg.QUIT:
+                if self.playing:
+                    self.playing = False
+                self.running = False
 
-all_sprites = pygame.sprite.Group()
+    def draw(self):
+        # Game Loop - draw
+        self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        # *after* drawing everything, flip the display
+        pg.display.flip()
 
-#Game loop
-running = True
-while running:
-    clock.tick(FPS)
-    #Process input (events)
-    for event in pygame.event.get():
-        #check for closing window
-        if event.type == pygame.QUIT:
-            running = False
+    def show_start_screen(self):
+        # game splash/start screen
+        pass
 
-    #Update
-    all_sprites.update()
+    def show_go_screen(self):
+        # game over/continue
+        pass
 
-    #Draw / render
-    screen.fill((BLACK))
-    all_sprites.draw(screen)
-    # los colores funcionan con RGB, no con hexadecimales, todos los colores = blanco
-    # ningun color = negro, los valores van de 0 a 255
-    # *after* everything, flip the display
-    pygame.display.flip()
+g = Game()
+g.show_start_screen()
+while g.running:
+    g.new()
+    g.show_go_screen()
 
-pygame.quit()
-
-
+pg.quit()
