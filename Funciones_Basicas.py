@@ -30,7 +30,7 @@ def cargar_img(nombre):
 
 #Función que encuentra un mp3 utilizando su dirección relativa.
 def cargarMP3(nombre):
-    return path.join('elementos',nombre)
+    return path.join('Assets/',nombre)
 
 #Funcion que detiene la reproducción de un mp3
 def detener_cancion():
@@ -43,7 +43,7 @@ def reproducir_cancion(archivoMP3):
     global reproductor
     detener_cancion()
     reproductor = vlc.MediaPlayer(archivoMP3)
-    reproductor.audio_set_volume(50)
+    reproductor.audio_set_volume(60)
     reproductor.play()
 
 #Función que hace lo mismo que reproducir_cancion pero delimitado para sonidos cortos y efectos.
@@ -51,5 +51,5 @@ def reproducir_fx(archivoMP3):
     global reproductor
     detener_cancion()
     reproductor = vlc.MediaPlayer(archivoMP3)
-    reproductor.audio_set_volume(50)
+    reproductor.audio_set_volume(60)
     reproductor.play()

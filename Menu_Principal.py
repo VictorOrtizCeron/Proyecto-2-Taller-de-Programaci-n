@@ -1,5 +1,6 @@
 from tkinter import *
 from Funciones_Basicas import *
+from vlc import *
 
 about = """
 
@@ -43,6 +44,18 @@ Fondo1 = C_menu.create_image(0,0,anchor = NW, image = C_menu.fondo)
 
 C_menu.titulo = cargar_img('Titulo.png')#Se establece la imagen de fondo del menu.
 Fondo1 = C_menu.create_image(5,10,anchor = NW, image = C_menu.titulo)
+
+MenuMusic = True
+reproductor = vlc.MediaPlayer()
+cancion = cargarMP3('MenuSong.mp3')
+
+def MenuLoop():
+    global MenuMusic
+    if MenuMusic:
+        reproducir_cancion(cancion)
+    ventana.after(61000,MenuLoop)
+    
+MenuLoop()
 
 
 def abrir_about():
