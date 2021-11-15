@@ -8,6 +8,8 @@ from os import path
 WIDTH = 600
 HEIGHT = 800
 FPS = 60
+isJump = False
+jumpCount = 10
 
 #definicion de colores utiles
 WHITE = (255, 255, 255)
@@ -54,25 +56,35 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
+        self.speedy = 0
 
     def update(self):
         self.speedx = 0
+        self.speedy = 10
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_a]:
             self.speedx = -8
         if keystate[pygame.K_d]:
             self.speedx = 8
+        if keystate[pygame.K_w]:
+            self.speedy = -8
+        self.rect.y += self.speedy
         self.rect.x += self.speedx
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-    
+        if self.rect.bottom > HEIGHT:
+            self.rect.bottom = HEIGHT
+
+
+
+        
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
-
+      
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -146,10 +158,12 @@ bullets = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
-for i in range(8):
+"""for i in range(8):
     m = Mob()
     all_sprites.add(m)
     mobs.add(m)
+
+"""
 score = 0
 
 #Game loop
@@ -164,6 +178,10 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 player.shoot()
+
+            
+
+
     #Update
     all_sprites.update()
     #revisar si las balas pegan
