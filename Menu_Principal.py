@@ -77,7 +77,7 @@ def abrir_about():
     #Funcion que destruye la el toplevel V_about, para volver al menú. Inicia tambien la reproduccion de la musica de menú.
     def destroy_window():
         detener_cancion()
-        cancion = cargarMP3('MenuMusic.mp3')
+        cancion = cargarMP3('MenuSong.mp3')
         reproducir_fx(cancion)
         ventana.deiconify()
         V_about.destroy()
