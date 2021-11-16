@@ -211,7 +211,8 @@ while running:
     #blit, es un termino que hace referencia a una imagen, en este caso la imagen de fondo
     all_sprites.draw(screen)
     draw_text(screen, str(score), 18, WIDTH / 2, 10)
-    draw_text(screen, str(lives), 18, WIDTH-100, 10)
+    draw_text(screen, ("Vidas restantes: " + str(lives)), 18, WIDTH-100, 10)
+    draw_text
     #mostrar texto, el texto, el score, el ancho del texto, el alto del texto
     # los colores funcionan con RGB, no con hexadecimales, todos los colores = blanco
     # ningun color = negro, los valores van de 0 a 255
