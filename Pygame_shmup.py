@@ -4,6 +4,11 @@ import os
 from os import path
 
 
+from assets import *
+from settings import *
+from sprites import *
+
+
 
 WIDTH = 600
 HEIGHT = 800
@@ -23,8 +28,6 @@ game_folder = os.path.dirname(__file__)
 ass_folder = os.path.join(game_folder, 'ProyAssets')
 
 
-
-
 #initialize pygame and create window
 pygame.init()
 pygame.mixer.init()
@@ -42,6 +45,7 @@ def draw_text(surf, text, size, x, y):
     text_rect.midtop = (x, y)
     surf.blit(text_surface, text_rect)
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -57,6 +61,9 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
         self.speedy = 0
+
+
+
 
     def update(self):
         self.speedx = 0
@@ -81,12 +88,42 @@ class Player(pygame.sprite.Sprite):
 
 
 
+    
         
     def shoot(self):
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
       
+class Health_bar(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.current_health = 300
+        self.max_health = 300
+        self.health_bar_length = 300
+
+    
+    def get_damage(self, amount):
+        if self.current_health > 0:
+            self.current_health -= amount
+        if self.current_health <=0:
+            self.current_health = 0
+    
+    def basic_health(self):
+        pygame.draw.rect(screen, RED, (10,10, self.current_health, 25))
+        pygame.draw.rect(screen, WHITE, (10,10, self.current_health, 25), 4)
+
+    def Player_ded(self):
+        if self.current_health <= 0:
+            self.kill()
+            pygame.quit()
+            quit()
+    
+    def update(self):
+        self.basic_health()
+        self.Player_ded()
+
+
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -179,6 +216,15 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
+background = pygame.image.load(path.join(ass_folder, 'GameBG.png')).convert()
+background_rect = background.get_rect()
+Nav_img= pygame.image.load(path.join(ass_folder, 'Tanque.png')).convert()
+Rayo_img= pygame.image.load(path.join(ass_folder, 'Rayo.png')).convert()
+Img_Rocas = []
+List_Rocas = ['Roca.png','RocaG1.png', 'RocaG2.png', 'RocaS.png', 'RocaXS.png']
+for img in List_Rocas:
+    Img_Rocas.append(pygame.image.load(path.join(ass_folder, img)).convert())
+
 #graficos del juego
 background = pygame.image.load(path.join(ass_folder, 'GameBG.png')).convert()
 background_rect = background.get_rect()
@@ -189,11 +235,14 @@ List_Rocas = ['Roca.png','RocaG1.png', 'RocaG2.png', 'RocaS.png', 'RocaXS.png']
 for img in List_Rocas:
     Img_Rocas.append(pygame.image.load(path.join(ass_folder, img)).convert())
 
-
+health = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 player = Player()
+health = Health_bar()
+
+
 all_sprites.add(player)
 for i in range(8):
     m = Mob()
@@ -201,7 +250,7 @@ for i in range(8):
     mobs.add(m)
 
 score = 0
-lives = 3
+
 #Game loop
 running = True
 while running:
@@ -220,6 +269,7 @@ while running:
 
     #Update
     all_sprites.update()
+
     #revisar si las balas pegan
     hits = pygame.sprite.groupcollide(mobs, bullets, True, True)
     for hit in hits:
@@ -234,10 +284,8 @@ while running:
     #el parentesis funciona asi: El sprite que se va a revisar, el grupo de sprites a revisar, 
     #si se quiere que se elimine el sprite que colisiono
     if hits:
-        lives -= 1
+        health.get_damage(100)
     
-    if lives == 0:
-        running = False
 
     #Draw / render
     #Draw / render
@@ -245,9 +293,8 @@ while running:
     screen.blit(background, background_rect)
     #blit, es un termino que hace referencia a una imagen, en este caso la imagen de fondo
     all_sprites.draw(screen)
-    draw_text(screen, str(score), 18, WIDTH / 2, 10)
-    draw_text(screen, ("Vidas restantes: " + str(lives)), 18, WIDTH-100, 10)
-    draw_text
+    draw_text(screen, str(score), 18, WIDTH -40, 10)
+    health.update()
     #mostrar texto, el texto, el score, el ancho del texto, el alto del texto
     # los colores funcionan con RGB, no con hexadecimales, todos los colores = blanco
     # ningun color = negro, los valores van de 0 a 255
@@ -255,6 +302,6 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
-pass
+
 
 
