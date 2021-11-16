@@ -15,6 +15,7 @@ HEIGHT = 800
 FPS = 60
 isJump = False
 jumpCount = 10
+Pause = False
 
 #definicion de colores utiles
 WHITE = (255, 255, 255)
