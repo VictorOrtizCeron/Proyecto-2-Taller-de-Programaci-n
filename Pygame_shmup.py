@@ -29,7 +29,7 @@ ass_folder = os.path.join(game_folder, 'ProyAssets')
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("shmup")
+pygame.display.set_caption("Le potato")
 clock = pygame.time.Clock()
 
 font_name = pygame.font.match_font('arial')
@@ -76,6 +76,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.bottom > HEIGHT:
             self.rect.bottom = HEIGHT
+        if self.rect.top < 0:
+            self.rect.top = 0
 
 
 
@@ -143,9 +145,9 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()
 
 #graficos del juego
-background = pygame.image.load(path.join(ass_folder, 'spaceBG.png')).convert()
+background = pygame.image.load(path.join(ass_folder, 'GameBG.png')).convert()
 background_rect = background.get_rect()
-Nav_img= pygame.image.load(path.join(ass_folder, 'NavJug.png')).convert()
+Nav_img= pygame.image.load(path.join(ass_folder, 'Tanque.png')).convert()
 Rayo_img= pygame.image.load(path.join(ass_folder, 'Rayo.png')).convert()
 Img_Rocas = []
 List_Rocas = ['Roca.png','RocaG1.png', 'RocaG2.png', 'RocaS.png', 'RocaXS.png']
@@ -158,14 +160,13 @@ bullets = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
-"""for i in range(8):
+for i in range(8):
     m = Mob()
     all_sprites.add(m)
     mobs.add(m)
 
-"""
 score = 0
-
+lives = 3
 #Game loop
 running = True
 while running:
@@ -193,19 +194,24 @@ while running:
         mobs.add(m)
 
     #revisar si hay colision
-    hits=pygame.sprite.spritecollide(player, mobs, False, pygame.sprite.collide_circle)
+    hits=pygame.sprite.spritecollide(player, mobs, True, pygame.sprite.collide_circle)
     #El collide_circle, especifica que usara el circulo de colision en vez de un rectangulo
     #el parentesis funciona asi: El sprite que se va a revisar, el grupo de sprites a revisar, 
     #si se quiere que se elimine el sprite que colisiono
     if hits:
+        lives -= 1
+    
+    if lives == 0:
         running = False
 
+    #Draw / render
     #Draw / render
     screen.fill((BLACK))
     screen.blit(background, background_rect)
     #blit, es un termino que hace referencia a una imagen, en este caso la imagen de fondo
     all_sprites.draw(screen)
     draw_text(screen, str(score), 18, WIDTH / 2, 10)
+    draw_text(screen, str(lives), 18, WIDTH-100, 10)
     #mostrar texto, el texto, el score, el ancho del texto, el alto del texto
     # los colores funcionan con RGB, no con hexadecimales, todos los colores = blanco
     # ningun color = negro, los valores van de 0 a 255
