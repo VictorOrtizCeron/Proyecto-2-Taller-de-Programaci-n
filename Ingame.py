@@ -135,14 +135,12 @@ def juego():
             ventana.after(30,lambda: mover_misil(misil))
 
     def mover_enemigo(enemigo):
-        if pause:
             vel = 3
             fondo.move(enemigo,0,vel)
             ventana.after(8, lambda: mover_enemigo(enemigo))
 
 
     def generar_enemigo():
-        if pause:
             x = random.randint(0,1024)
             enemigo =  fondo.create_image(x, 0, anchor = NW, image = fondo.Enemigo_1)
             mover_enemigo(enemigo)
