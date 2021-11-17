@@ -49,6 +49,8 @@ Fondo1 = C_menu.create_image(0,0,anchor = NW, image = C_menu.fondo)
 C_menu.titulo = cargar_img('Titulo.png')#Se establece la imagen de fondo del menu.
 Fondo1 = C_menu.create_image(5,10,anchor = NW, image = C_menu.titulo)
 
+
+
 MenuMusic = True
 reproductor = vlc.MediaPlayer()
 cancion = cargarMP3('MenuSong.mp3')
