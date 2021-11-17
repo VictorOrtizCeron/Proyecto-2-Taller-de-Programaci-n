@@ -137,6 +137,8 @@ def juego():
     def mover_enemigo(enemigo):
             vel = 3
             fondo.move(enemigo,0,vel)
+            if fondo.coords(enemigo)[1] >= 768:
+                fondo.delete(enemigo)
             ventana.after(8, lambda: mover_enemigo(enemigo))
 
 
@@ -146,6 +148,20 @@ def juego():
             mover_enemigo(enemigo)
             ventana.after(1000, generar_enemigo)
 
+    def colision(misil, enemigo):
+        if fondo.type(enemigo) and fondo.type(misil):
+            enemigo_coordenadas = fondo.coords(enemigo)
+            misil_coordenadas = fondo.coords(misil)
+            if ((enemigo_coordenadas[0]) < (misil_coordenadas[0] + 36)
+            and (enemigo_coordenadas[0] + 88) > (misil_coordenadas[0])
+            and (enemigo_coordenadas[1]) < (misil_coordenadas[1] + 34)
+            and (enemigo_coordenadas[1] + 88) > (misil_coordenadas[1])
+            ):
+                fondo.delete(enemigo)
+                fondo.delete(misil)
+                return True
+                
+            ventana.after(1,lambda: colision(enemigo,misil))
 
     def mover():
         global direc,salto
