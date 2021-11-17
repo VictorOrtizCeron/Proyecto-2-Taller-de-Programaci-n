@@ -1,7 +1,7 @@
 from tkinter import *
 from Funciones_Basicas import *
 from random import randint
-import threading
+from threading import *
 
 
 Tiempo = 0
@@ -13,8 +13,9 @@ pause = False
 Nombre = "Unknown"
 GameOver = False
 Quit = False
-GeneratorSpeed = 5000
+GeneratorSpeed = 1000
 salto = True
+Speed = 45
 
 def crear_ventana():
     global ventana
@@ -25,7 +26,7 @@ def crear_ventana():
 def juego():
 
     def Restart():
-        global direc,Running,GameOver,ventana,pause, Tiempo,Score,Quit,Nombre,level,GeneratorSpeed
+        global direc,Running,GameOver,ventana,pause, Tiempo,Score,Quit,Nombre,level,GeneratorSpeed,Speed
         direc = [False,False,False,False]
         Running = True
         GameOver = False
@@ -35,8 +36,9 @@ def juego():
         Quit = False
         Nombre = 'Unknown'
         level = 1
-        GeneratorSpeed = 5000
-    Restart()
+        Speed = 45
+        GeneratorSpeed = 1000
+    
 
 
     global direc,Running
@@ -48,6 +50,7 @@ def juego():
     fondo.Tanque_img = cargar_img("Tanque/Tanque-1.png")
     fondo.Tanque_img2 = cargar_img("Tanque/Tanque-2.png")
     fondo.Misil = cargar_img("Misil.png")
+    fondo.MisilEnemigo = cargar_img("MisilEnemigo.png")
     Tanque = fondo.create_image(432,650, anchor = NW, image = fondo.Tanque_img)
     
 
@@ -62,6 +65,7 @@ def juego():
     
     st = fondo.create_text(520,350, text = 'Press P to Start', fill = "black", font = ("8BIT WONDER",30) )
 
+    fondo.pack()
     #Función que determina la dirección de movimiento del submarino utilizando la lista de booleanos direc, 
     # dependiendo de la presión de teclas.
     def teclaIn(event):
@@ -218,5 +222,50 @@ def juego():
     temporizador()
 
 
-    fondo.pack()
     
+
+    def mover_obstaculo(obstaculo):
+        global Running ,Speed
+        if fondo.type(obstaculo) and Running:
+            if pause:
+                coordenadas = fondo.coords(obstaculo)
+                if coordenadas[1]+ 64 >= 730:
+                    fondo.delete(obstaculo)
+                else:
+                    fondo.move(obstaculo,0,10)
+            ventana.after(Speed,lambda: mover_obstaculo(obstaculo))
+
+    
+
+    #Función que genera  los obstáculos , y luego los borra los obstáculos cuando sale de la pantalla de juego.
+    def generar_MisilEnemigo_aux():
+        global Running , GeneratorSpeed
+        if Running:
+            if pause:
+                x= randint(0,950)
+                misil = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)    
+                mover_obstaculo(misil)
+                colision_misil_aux(misil)
+                
+            ventana.after(GeneratorSpeed,generar_MisilEnemigo_aux)
+
+    generar_MisilEnemigo_aux()
+    
+    def colision_misil_aux(misil):
+        global Running , GameOver 
+        #Condicional de delimitación de lista de coordenadas cuando el obstáculo sale de la pantalla de juego.
+        if fondo.type(misil) and Running:
+            if pause:
+                coordenadas_Tanque = fondo.coords(Tanque)
+                coordenadas_misil = fondo.coords(misil)
+                if (coordenadas_misil[0]+16) < (coordenadas_Tanque[0]+75) and \
+                    (coordenadas_misil[0]+ 48)>(coordenadas_Tanque[0]+16) and \
+                    (coordenadas_misil[1]+12) < (coordenadas_Tanque[1]+64) and \
+                    (coordenadas_misil[1] + 60 ) > (coordenadas_Tanque[1]+20):
+                    #Valores iniciales para iniciar perdida de juego
+                    #Running = False
+                    #GameOver = True
+                    print('Colisión')
+                    
+            ventana.after(1,lambda : colision_misil_aux(misil))
+       
