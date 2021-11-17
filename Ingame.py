@@ -50,7 +50,9 @@ def juego():
     fondo.Misil = cargar_img("Misil.png")
     Tanque = fondo.create_image(432,650, anchor = NW, image = fondo.Tanque_img)
     fondo.Enemigo_1 = cargar_img('Ufo.png')
-
+    fondo.Enemigo_2 = cargar_img('Big_Ufo.png')
+    fondo.Enemigo_3 = cargar_img('Alien.png')
+    fondo.Proy_Enem = cargar_img('laser.png')
     
 
     Temporizador = fondo.create_text(200,740, text = Tiempo, fill = "white", font = ("8BIT WONDER",13) )
@@ -162,6 +164,90 @@ def juego():
                 return True
                 
             ventana.after(1,lambda: colision(enemigo,misil))
+
+    def enemigo2():
+        enemigoG = fondo.create_image(612, 0, anchor = NW, image = fondo.Enemigo_2) 
+        mover_enemigo2(enemigoG)
+        ventana.after(20000, enemigo2)
+
+    def mover_enemigo2(enemigoG):
+        vel = 3
+        fondo.move(enemigoG,0,vel)
+        ventana.after(8, lambda: mover_enemigo2(enemigoG))
+        if fondo.coords(enemigoG)[1] >= 51:
+            enemigo2_R(enemigoG)
+
+    def enemigo2_R(enemigoG):
+        vel = 3
+        fondo.move(enemigoG, vel, 0)
+        ventana.after(8, lambda: enemigo2_R(enemigoG))
+        if fondo.coords(enemigoG)[0] + 90 >= 1024:
+            fondo.move(enemigoG, 0, 10)
+            enemigo2_L(enemigoG)
+        elif fondo.coords(enemigoG)[1] >= 600:
+            fondo.delete(enemigoG)
+    def enemigo2_L(enemigoG):
+        vel = 3
+        fondo.move(enemigoG, -vel, 0)
+        ventana.after(8, lambda: enemigo2_L(enemigoG))
+        if fondo.coords(enemigoG)[0] <= 0:
+            fondo.move(enemigoG, 0, 10)
+            enemigo2_R(enemigoG)
+        elif fondo.coords(enemigoG)[1] >= 600:
+            fondo.delete(enemigoG)
+
+    def enemigo_3():
+        x = random.randint(15,999)
+        enemigo3 = fondo.create_image(x, 0, anchor = NW, image = fondo.Enemigo_3)
+        mover_enemigo3(enemigo3)
+        ventana.after(9000, enemigo_3)
+
+    def mover_enemigo3(enemigo3):
+        vel = 3
+        fondo.move(enemigo3,0,vel)
+        ventana.after(8, lambda: mover_enemigo3(enemigo3))
+        if fondo.coords(enemigo3)[1] >= 712:
+            direccion_enemigo3(enemigo3)
+    
+    def direccion_enemigo3(enemigo3):
+        coords_enemigo = fondo.coords(enemigo3)
+
+        if (coords_enemigo[0] + 28 > 512):
+            enemigo_D(enemigo3)
+        else:
+            enemigo_L(enemigo3)
+
+    def enemigo_D(enemigo3):
+        vel = 4
+        fondo.move(enemigo3, vel, 0)
+        ventana.after(8, lambda: enemigo_D(enemigo3))
+        disparo_L(enemigo3)
+
+    def disparo_L(enemigo3):
+        bala = fondo.create_image(fondo.coords(enemigo3)[0] + 28, fondo.coords(enemigo3)[1] + 28, anchor = NW, image = fondo.Proy_Enem)
+        mover_disparo_L(bala)
+
+    def mover_disparo_L(bala):
+        fondo.move(bala, -4, 0)
+        ventana.after(8, lambda: mover_disparo_L(bala))
+        if fondo.coords(bala)[0] <= 0:
+            fondo.delete(bala)
+
+    def enemigo_L(enemigo3):
+        vel = 4
+        fondo.move(enemigo3, -vel, 0)
+        ventana.after(8, lambda: enemigo_L(enemigo3))
+        disparo_R(enemigo3)
+    
+    def disparo_R(enemigo3):
+        bala = fondo.create_image(fondo.coords(enemigo3)[0] + 28, fondo.coords(enemigo3)[1] + 28, anchor = NW, image = fondo.Proy_Enem)
+        mover_disparo_R(bala)
+    
+    def mover_disparo_R(bala):
+        fondo.move(bala, 4, 0)
+        ventana.after(8, lambda: mover_disparo_R(bala))
+        if fondo.coords(bala)[0] >= 1024:
+            fondo.delete(bala)
 
     def mover():
         global direc,salto
