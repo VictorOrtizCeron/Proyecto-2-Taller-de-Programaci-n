@@ -1,6 +1,10 @@
 from tkinter import *
-from Funciones_Basicas import *
-from vlc import *
+from os import path
+import vlc
+from threading import Thread
+#from Funciones_Scoreboard import *
+from Funciones_Basicas import*
+from Control_Pantallas import *
 
 about = """
 
@@ -53,6 +57,8 @@ def MenuLoop():
     global MenuMusic
     if MenuMusic:
         reproducir_cancion(cancion)
+    else:
+        detener_cancion()
     ventana.after(61000,MenuLoop)
     
 MenuLoop()
@@ -83,11 +89,16 @@ def abrir_about():
         V_about.destroy()
     V_about.protocol("WM_DELETE_WINDOW",destroy_window)
 
+
 def abrir_scores():
     print("Scores")
 
 def Empezar_Juego():
-    print("Corre Juego")
+    global MenuMusic
+    detener_cancion()
+    MenuMusic = False
+    ventana.withdraw()    
+    abrir_juego(ventana)
 
 def Empezar_Juego2():
     print("Corre Juego1")
