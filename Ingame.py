@@ -14,6 +14,7 @@ Nombre = "Unknown"
 GameOver = False
 Quit = False
 GeneratorSpeed = 5000
+salto = True
 
 def crear_ventana():
     global ventana
@@ -46,6 +47,7 @@ def juego():
 
     fondo.Tanque_img = cargar_img("Tanque/Tanque-1.png")
     fondo.Tanque_img2 = cargar_img("Tanque/Tanque-2.png")
+    fondo.Misil = cargar_img("Misil.png")
     Tanque = fondo.create_image(432,650, anchor = NW, image = fondo.Tanque_img)
     
 
@@ -67,6 +69,7 @@ def juego():
         if Running:
             if event.keysym == 'Up': #El submarino se mueve para arriba.
                 direc[3] = True
+                salto_aux()
             if event.keysym == 'Down':#El submarino se mueve para abajo.
                 direc[2] = True
             if event.keysym == 'Left':#El submarino se mueve para izquierda.
@@ -80,10 +83,11 @@ def juego():
                     pause = False
                 else:
                     pause = True
+            
 
     #Función que detiene el movimiento del submarino al soltar las teclas presionadas. 
     def teclaOut(event):
-        global direc,Running
+        global direc,Running,salto
         if Running:
             if event.keysym == 'Up':
                 direc[3] = False
@@ -93,22 +97,46 @@ def juego():
                 direc[1] = False
             if event.keysym == 'Right':
                 direc[0] = False
+            if event.keysym == 'x':
+                disparo()
     
     def volar():
-        global direc 
+        global direc , salto
         coordenadas = fondo.coords(Tanque)
-        if direc[3]== True:
+        if direc[3]== True and salto == True:
             fondo.itemconfig(Tanque,image = fondo.Tanque_img2 )
         else:
             fondo.itemconfig(Tanque,image = fondo.Tanque_img )
-
-        
-
         ventana.after(5,volar)
     volar()
 
+
+    
+    def disparo():
+        if Running:
+            if pause:
+                generar_misil()
+                
+    def generar_misil():
+        coordenadas = fondo.coords(Tanque)
+        x = coordenadas[0]
+        y = coordenadas[1]
+        misil = fondo.create_image(x+25,y-20,anchor = NW , image= fondo.Misil)
+        mover_misil(misil)
+    
+    def mover_misil(misil):
+        if fondo.type(misil) and Running:
+            if pause:
+                coordenadas = fondo.coords(misil)
+                if coordenadas[1]+ 34  <= 0:
+                    fondo.delete(misil)
+                else:
+                    fondo.move(misil,0,-8)
+            ventana.after(30,lambda: mover_misil(misil))
+
+
     def mover():
-        global direc
+        global direc,salto
         if Running:
             if pause:
                 vel = 3
@@ -119,10 +147,21 @@ def juego():
                     fondo.move(Tanque, 0,vel)
                 if direc[1] and coordenadas[0] > 35:
                     fondo.move(Tanque, -vel,0)
-                if direc[3] and coordenadas[1] > 20:
-                    fondo.move(Tanque, 0,-8)
+                if direc[3] and coordenadas[1] > 300 and salto == True:
+                        fondo.move(Tanque, 0,-8)
+
             ventana.after(5,mover)  
     
+    def salto_aux():
+        global salto
+        coordenadas = fondo.coords(Tanque)
+        if coordenadas[1] > 630:
+            salto = True
+        else:
+            salto = False
+        
+        
+
     def MovingDown():
         global VelY
         if Running and fondo.coords(Tanque)[1] + 84 < 730:
