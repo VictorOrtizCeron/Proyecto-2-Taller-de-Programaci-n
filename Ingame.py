@@ -1,6 +1,6 @@
 from tkinter import *
 from Funciones_Basicas import *
-from random import randint
+import random
 import threading
 
 
@@ -49,7 +49,7 @@ def juego():
     fondo.Tanque_img2 = cargar_img("Tanque/Tanque-2.png")
     fondo.Misil = cargar_img("Misil.png")
     Tanque = fondo.create_image(432,650, anchor = NW, image = fondo.Tanque_img)
-    
+    fondo.Enemigo_1 = cargar_img('Ufo.png')
 
     
 
@@ -134,6 +134,20 @@ def juego():
                     fondo.move(misil,0,-8)
             ventana.after(30,lambda: mover_misil(misil))
 
+    def mover_enemigo(enemigo):
+        if Running:
+            vel = 3
+            fondo.move(enemigo,0,vel)
+            ventana.after(5, lambda: mover_enemigo(enemigo))
+
+
+    def generar_enemigo():
+        if Running:
+            x = random.randint(0,1024)
+            enemigo =  fondo.create_image(x, 0, anchor = NW, image = fondo.Enemigo_1)
+            mover_enemigo(enemigo)
+            ventana.after(1000, generar_enemigo)
+
 
     def mover():
         global direc,salto
@@ -160,7 +174,11 @@ def juego():
         else:
             salto = False
         
-        
+    def Cancion():
+        song = cargarMP3('GameSong.mp3')
+        global Running
+        if Running:
+            reproducir_cancion(song)
 
     def MovingDown():
         global VelY
@@ -171,6 +189,8 @@ def juego():
 
     MovingDown()        
     mover()
+    Cancion()
+    generar_enemigo()
 
     #Creación de eventos, y definición de funciones para llevar a cabo.
     ventana.bind('<KeyPress>', teclaIn)
