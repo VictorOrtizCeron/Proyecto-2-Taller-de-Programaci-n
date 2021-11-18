@@ -139,13 +139,14 @@ def juego():
     def mover_enemigo(enemigo):
             vel = 3
             fondo.move(enemigo,0,vel)
-            if fondo.coords(enemigo)[1] >= 768:
-                fondo.delete(enemigo)
             ventana.after(8, lambda: mover_enemigo(enemigo))
+            if fondo.coords(enemigo)[1] >= 767:
+                fondo.delete(enemigo)
+            
 
 
     def generar_enemigo():
-            x = random.randint(0,1024)
+            x = random.randint(0,1020)
             enemigo =  fondo.create_image(x, 0, anchor = NW, image = fondo.Enemigo_1)
             mover_enemigo(enemigo)
             ventana.after(1000, generar_enemigo)
@@ -173,15 +174,15 @@ def juego():
     def mover_enemigo2(enemigoG):
         vel = 3
         fondo.move(enemigoG,0,vel)
-        ventana.after(8, lambda: mover_enemigo2(enemigoG))
+        ventana.after(10, lambda: mover_enemigo2(enemigoG))
         if fondo.coords(enemigoG)[1] >= 51:
             enemigo2_R(enemigoG)
 
     def enemigo2_R(enemigoG):
         vel = 3
         fondo.move(enemigoG, vel, 0)
-        ventana.after(8, lambda: enemigo2_R(enemigoG))
-        if fondo.coords(enemigoG)[0] + 90 >= 1024:
+        ventana.after(10, lambda: enemigo2_R(enemigoG))
+        if fondo.coords(enemigoG)[0] + 90 <= 1023:
             fondo.move(enemigoG, 0, 10)
             enemigo2_L(enemigoG)
         elif fondo.coords(enemigoG)[1] >= 600:
@@ -189,8 +190,8 @@ def juego():
     def enemigo2_L(enemigoG):
         vel = 3
         fondo.move(enemigoG, -vel, 0)
-        ventana.after(8, lambda: enemigo2_L(enemigoG))
-        if fondo.coords(enemigoG)[0] <= 0:
+        ventana.after(10, lambda: enemigo2_L(enemigoG))
+        if fondo.coords(enemigoG)[0] + 80 >= 1:
             fondo.move(enemigoG, 0, 10)
             enemigo2_R(enemigoG)
         elif fondo.coords(enemigoG)[1] >= 600:
@@ -204,10 +205,11 @@ def juego():
 
     def mover_enemigo3(enemigo3):
         vel = 3
-        fondo.move(enemigo3,0,vel)
         ventana.after(8, lambda: mover_enemigo3(enemigo3))
         if fondo.coords(enemigo3)[1] >= 712:
             direccion_enemigo3(enemigo3)
+        else:
+            fondo.move(enemigo3,0,vel)
     
     def direccion_enemigo3(enemigo3):
         coords_enemigo = fondo.coords(enemigo3)
@@ -246,7 +248,7 @@ def juego():
     def mover_disparo_R(bala):
         fondo.move(bala, 4, 0)
         ventana.after(8, lambda: mover_disparo_R(bala))
-        if fondo.coords(bala)[0] >= 1024:
+        if fondo.coords(bala)[0] >= 1023:
             fondo.delete(bala)
 
     def mover():
@@ -291,6 +293,7 @@ def juego():
     mover()
     Cancion()
     generar_enemigo()
+    enemigo_3()
 
     #Creación de eventos, y definición de funciones para llevar a cabo.
     ventana.bind('<KeyPress>', teclaIn)
