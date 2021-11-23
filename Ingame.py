@@ -16,6 +16,8 @@ Quit = False
 GeneratorSpeed = 1000
 salto = True
 Speed = 45
+MisilCoords = 0
+MisilEnemigoCoords = 0
 
 def crear_ventana():
     global ventana
@@ -115,28 +117,44 @@ def juego():
     volar()
 
 
-    
     def disparo():
         if Running:
             if pause:
                 generar_misil()
                 
     def generar_misil():
+        global MisilEnemigoCoords
         coordenadas = fondo.coords(Tanque)
         x = coordenadas[0]
         y = coordenadas[1]
         misil = fondo.create_image(x+25,y-20,anchor = NW , image= fondo.Misil)
         mover_misil(misil)
+        misiles_colision(misil,MisilEnemigoCoords)
+
     
     def mover_misil(misil):
+        global MisilEnemigoCoords
+        MisilCoords = fondo.coords(misil)
         if fondo.type(misil) and Running:
             if pause:
                 coordenadas = fondo.coords(misil)
-                if coordenadas[1]+ 34  <= 0:
+                if coordenadas[1]+ 34  <= 0 :
                     fondo.delete(misil)
                 else:
                     fondo.move(misil,0,-8)
+                    MisilCoords = coordenadas
             ventana.after(30,lambda: mover_misil(misil))
+
+    def misiles_colision(misil,MisilEnemigoCoords):
+        MisilCoords = fondo.coords(misil)
+        if (MisilCoords[0]+12) < (MisilEnemigoCoords[0] + 16) and \
+            (MisilCoords[0]+ 24)>(MisilEnemigoCoords[0]+48) and \
+            (MisilCoords[1]) < (MisilEnemigoCoords[1]+60) and \
+            (MisilCoords[1] + 28 ) > (MisilEnemigoCoords[1]+8):
+            fondo.delete(misil)
+            print("lmao")
+        ventana.after(1,lambda:misiles_colision)
+                    
 
 
     def mover():
@@ -224,8 +242,8 @@ def juego():
 
     
 
-    def mover_obstaculo(obstaculo):
-        global Running ,Speed
+    def mover_misil_Enemigo(obstaculo):
+        global Running ,Speed, MisilEnemigoCoords
         if fondo.type(obstaculo) and Running:
             if pause:
                 coordenadas = fondo.coords(obstaculo)
@@ -233,7 +251,8 @@ def juego():
                     fondo.delete(obstaculo)
                 else:
                     fondo.move(obstaculo,0,10)
-            ventana.after(Speed,lambda: mover_obstaculo(obstaculo))
+                    MisilEnemigoCoords = coordenadas
+            ventana.after(Speed,lambda: mover_misil_Enemigo(obstaculo))
 
     
 
@@ -243,9 +262,9 @@ def juego():
         if Running:
             if pause:
                 x= randint(0,950)
-                misil = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)    
-                mover_obstaculo(misil)
-                colision_misil_aux(misil)
+                misilEnemigo = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)    
+                mover_misil_Enemigo(misilEnemigo)
+                colision_misil_aux(misilEnemigo)
                 
             ventana.after(GeneratorSpeed,generar_MisilEnemigo_aux)
 
@@ -265,7 +284,11 @@ def juego():
                     #Valores iniciales para iniciar perdida de juego
                     #Running = False
                     #GameOver = True
-                    print('Colisión')
+                    print("colision")
+                    
                     
             ventana.after(1,lambda : colision_misil_aux(misil))
-       
+
+    
+    
+    
