@@ -29,7 +29,7 @@ def crear_ventana():
 def juego():
 
     def Restart():
-        global direc,Running,GameOver,ventana,pause, Tiempo,Score,Quit,Nombre,level,GeneratorSpeed,Speed
+        global direc,Running,GameOver,ventana,pause, Tiempo,Score,Quit,Nombre,level,GeneratorSpeed,Speed, Lives
         direc = [False,False,False,False]
         Running = True
         GameOver = False
@@ -41,7 +41,7 @@ def juego():
         level = 1
         Speed = 45
         GeneratorSpeed = 1000
-    
+        Lives = 3
 
 
     global direc,Running, Lives
@@ -287,8 +287,17 @@ def juego():
                     #Valores iniciales para iniciar perdida de juego
                     #Running = False
                     #GameOver = True
+                    fondo.delete(misil)
                     Lives = Lives - 1
                     fondo.itemconfig(Live, text = Lives)
                     
-                    
             ventana.after(1,lambda : colision_misil_aux(misil))
+
+    def end_game():
+        global GameOver, Running, Lives
+        if Lives == 0:
+                Running = False
+                ventana.destroy()
+                print("Game Over")
+        ventana.after(1,lambda : end_game())
+    end_game()
