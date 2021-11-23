@@ -288,6 +288,7 @@ def juego():
                     #Running = False
                     #GameOver = True
                     Lives = Lives - 1
+                    fondo.itemconfig(Live, text = Lives)
                     
                     
             ventana.after(1,lambda : colision_misil_aux(misil))
