@@ -18,6 +18,7 @@ salto = True
 Speed = 45
 MisilCoords = 0
 MisilEnemigoCoords = 0
+Lives = 3
 
 def crear_ventana():
     global ventana
@@ -43,7 +44,7 @@ def juego():
     
 
 
-    global direc,Running
+    global direc,Running, Lives
 
     fondo = Canvas(ventana,width = 1024, height = 768)
     ventana.fondo = cargar_img('FONDOMENU2.png')#Se establece la imagen de fondo del menu
@@ -61,9 +62,11 @@ def juego():
     Temporizador = fondo.create_text(200,740, text = Tiempo, fill = "white", font = ("8BIT WONDER",13) )
     Scorer = fondo.create_text(400,740, text = Score, fill = "white", font = ("8BIT WONDER",13) )
     lvl = fondo.create_text(580,740, text = level, fill = "white", font = ("8BIT WONDER",13) )
+    Live = fondo.create_text(800,740, text = Lives, fill = "white", font = ("8BIT WONDER",13) )
     name_Temp = fondo.create_text(100,740, text = 'Timer:', fill = "white", font = ("8BIT WONDER",13) )
     name_Score = fondo.create_text(300,740, text = 'Score:', fill = "white", font = ("8BIT WONDER",13) )
     name_lvl = fondo.create_text(500,740, text = 'Level:', fill = "white", font = ("8BIT WONDER",13) )
+    name_Live = fondo.create_text(700,740, text = 'Lives:', fill = "white", font = ("8BIT WONDER",13) )
     
     st = fondo.create_text(520,350, text = 'Press P to Start', fill = "black", font = ("8BIT WONDER",30) )
 
@@ -271,7 +274,7 @@ def juego():
     generar_MisilEnemigo_aux()
     
     def colision_misil_aux(misil):
-        global Running , GameOver 
+        global Running , GameOver, Lives
         #Condicional de delimitación de lista de coordenadas cuando el obstáculo sale de la pantalla de juego.
         if fondo.type(misil) and Running:
             if pause:
@@ -284,7 +287,7 @@ def juego():
                     #Valores iniciales para iniciar perdida de juego
                     #Running = False
                     #GameOver = True
-                    print("colision")
+                    Lives = Lives - 1
                     
                     
             ventana.after(1,lambda : colision_misil_aux(misil))
