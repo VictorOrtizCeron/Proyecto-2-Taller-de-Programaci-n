@@ -147,16 +147,6 @@ def juego():
                     fondo.move(misil,0,-8)
                     MisilCoords = coordenadas
             ventana.after(30,lambda: mover_misil(misil))
-
-    def misiles_colision(misil,MisilEnemigoCoords):
-        MisilCoords = fondo.coords(misil)
-        if (MisilCoords[0]+12) < (MisilEnemigoCoords[0] + 16) and \
-            (MisilCoords[0]+ 24)>(MisilEnemigoCoords[0]+48) and \
-            (MisilCoords[1]) < (MisilEnemigoCoords[1]+60) and \
-            (MisilCoords[1] + 28 ) > (MisilEnemigoCoords[1]+8):
-            fondo.delete(misil)
-            print("lmao")
-        ventana.after(1,lambda:misiles_colision)
                     
 
 
@@ -293,11 +283,23 @@ def juego():
                     
             ventana.after(1,lambda : colision_misil_aux(misil))
 
+    def misiles_colision(misil,MisilEnemigo):
+            MisilCoords = fondo.coords(misil)
+            MisilEnemigoCoords = fondo.coords(MisilEnemigo)
+            if (MisilCoords[0]+12) < (MisilEnemigoCoords[0] + 16) and \
+                (MisilCoords[0]+ 24)>(MisilEnemigoCoords[0]+48) and \
+                (MisilCoords[1]) < (MisilEnemigoCoords[1]+60) and \
+                (MisilCoords[1] + 28 ) > (MisilEnemigoCoords[1]+8):
+                fondo.delete(misil)
+                print("lmao")
+            ventana.after(1,lambda:misiles_colision(misil,MisilEnemigo))
+
     def end_game():
-        global GameOver, Running, Lives
+        global GameOver, Running, Lives, Score, Tiempo
         if Lives == 0:
                 Running = False
                 ventana.destroy()
                 print("Game Over")
+                return Score, Tiempo
         ventana.after(1,lambda : end_game())
     end_game()
