@@ -92,20 +92,21 @@ def juego():
     
 
     Temporizador = fondo.create_text(200,740, text = Tiempo, fill = "white", font = ("8BIT WONDER",13) )
+    
     Scorer = fondo.create_text(400,740, text = Score, fill = "white", font = ("8BIT WONDER",13) )
     lvl = fondo.create_text(580,740, text = level, fill = "white", font = ("8BIT WONDER",13) )
     name_Temp = fondo.create_text(100,740, text = 'Timer:', fill = "white", font = ("8BIT WONDER",13) )
     name_Score = fondo.create_text(300,740, text = 'Score:', fill = "white", font = ("8BIT WONDER",13) )
     name_lvl = fondo.create_text(500,740, text = 'Level:', fill = "white", font = ("8BIT WONDER",13) )
-    
+    Vidas = fondo.create_text(700,740, text = "Lives:", fill = "white", font = ("8BIT WONDER",13) )
     st = fondo.create_text(520,350, text = 'Press P to Start', fill = "black", font = ("8BIT WONDER",30) )
 
     fondo.heart1 = cargar_img("Heart.png")
     fondo.heart2 = cargar_img("Heart.png")
     fondo.heart3 = cargar_img("Heart.png")
-    Life1 = fondo.create_image(600,720, anchor = NW, image = fondo.heart1)
-    Life2 = fondo.create_image(670,720, anchor = NW, image = fondo.heart2)
-    Life3 = fondo.create_image(730,720, anchor = NW, image = fondo.heart3)
+    Life1 = fondo.create_image(760,720, anchor = NW, image = fondo.heart1)
+    Life2 = fondo.create_image(820,720, anchor = NW, image = fondo.heart2)
+    Life3 = fondo.create_image(880,720, anchor = NW, image = fondo.heart3)
     fondo.pack()
     #Función que determina la dirección de movimiento del submarino utilizando la lista de booleanos direc, 
     # dependiendo de la presión de teclas.
