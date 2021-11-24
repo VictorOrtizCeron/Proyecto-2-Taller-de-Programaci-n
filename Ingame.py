@@ -243,15 +243,19 @@ def juego():
     
     def check_lives(Life1, Life2, Life3):
         global Life, Running, GameOver
-        if Life == 2:
-            fondo.delete(Life1)
-        elif Life == 1:
-            fondo.delete(Life2)
-        else:
-            if Life == 0:
-                fondo.delete(Life3)
-                Game_Over()
-        ventana.after(10, lambda : check_lives(Life1, Life2, Life3))
+        if Running:
+            if pause:
+                if Life == 2:
+                    fondo.delete(Life1)
+                elif Life == 1:
+                    fondo.delete(Life2)
+                else:
+                    if Life == 0:
+                        fondo.delete(Life3)
+                        GameOver = True
+                        Running = False
+                        Game_Over()
+            ventana.after(10, lambda : check_lives(Life1, Life2, Life3))
     
     check_lives(Life1, Life2, Life3)            
             
