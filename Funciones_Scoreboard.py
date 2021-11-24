@@ -2,7 +2,7 @@
 
 
 
-from Ingame import Score
+from Ingame import Score, name
 
 
 def show_scores(current_score):

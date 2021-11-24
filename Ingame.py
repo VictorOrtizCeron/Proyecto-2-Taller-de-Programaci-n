@@ -3,6 +3,8 @@ from Funciones_Basicas import *
 from random import randint
 from threading import *
 
+from Funciones_Scoreboard import save_data
+
 
 Tiempo = 0
 Score = 0
@@ -341,4 +343,7 @@ def juego():
         Frame1.pack(pady=20)
         name = J_nombre = Entry(Frame1, width=20, font="Arial")
         J_nombre.grid(row=1, column=1, padx=30)
+        Informacion_Score = Button(Frame1, text="Confirmar", command=save_data)
+        Informacion_Score.grid(row=2, column=1, padx=20)
+        title = name.create_text(612,340, text = 'favor inserte su nombre', fill = "white", font = ("8BIT WONDER",13) )
         
