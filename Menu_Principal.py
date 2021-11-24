@@ -35,7 +35,7 @@ Autores del módulo Control_Pantallas: Víctor Ortiz Cerón con Asistencia de Ra
 """
 ventana = Tk()
 ventana.title("Mars Under Fire")
-ventana.minsize(600,800)
+ventana.minsize(600,800)p
 ventana.resizable(width = NO, height = NO)
 
 fuente = fuente = ("8BIT WONDER",15)

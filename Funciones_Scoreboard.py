@@ -1,6 +1,4 @@
 
-
-
 def show_scores(current_score):
     #Funcion para printear resultados en la pantalla despues del juego y poder volver al menu principal
     global name
@@ -50,15 +48,15 @@ def get_datas(current_score):
     return scores_formatted
 
 
-def save_data():
-    global name, Score 
-    name_info = name.get()
+def save_data(name, score):
+    name_info = name
 
     with open("scores.txt", "r") as f:
         datas = f.read()
 
-    datas += name_info + "__" + str(Score) + "\n"
+    datas += name_info + "__" + str(score) + "\n"
 
     with open("scores.txt", "w") as f:
         f.write(datas)
+
 
