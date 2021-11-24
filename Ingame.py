@@ -19,6 +19,10 @@ Speed = 45
 MisilCoords = [0,0]
 MisilEnemigoCoords = [0,0]
 colision = False
+Life = 3
+name = ''
+GameOver = False
+Quit = False
 
 def crear_ventana():
     global ventana
@@ -34,13 +38,41 @@ def juego():
         Running = True
         GameOver = False
         pause = False
-        Tiempo = 35
+        Tiempo = 0
         Score= 0
         Quit = False
         Nombre = 'Unknown'
         level = 1
         Speed = 45
         GeneratorSpeed = 1000
+        Life = 3
+        name = ''
+    
+    def Game_Over():
+        global GameOver , Score , Quit
+        gameover = cargarMP3('GameOver.mp3')
+        if GameOver == True and Quit == False:
+
+            #Crea el texto 'Game Over' y reproduce el audio denotado GameOver.mp3
+            fondo.create_text(520,300, text = 'GAME OVER ', fill = "black", font = ("8BIT WONDER",40) )
+            fondo.create_text(520,350, text = ('Score:',Score), fill = "black", font = ("8BIT WONDER",25) )
+            reproducir_fx(gameover)
+
+            #Crea la barra de entrada para capturar el nombre del usuario.
+            E_nombre = Entry(ventana, width = 10, font = ('8BIT WONDER',20) )
+            E_nombre.place(x = 370 ,y = 420)
+
+            #Función que genera un texto que confirma la captura del nombre del usuario.
+            def get_Name():
+                global Nombre
+                Nombre = E_nombre.get()
+                print(Nombre)
+                print(Score)
+                fondo.create_text(520,550, text = ('Score Saved'), fill = "black", font = ("8BIT WONDER",20) )
+
+            #Crea el botón para capturar el nombre.
+            Btn_enter = Button(ventana, text = 'Enter',font = ('8BIT WONDER',20), width = 7,command = get_Name)
+            Btn_enter.place(x = 410, y = 460)
     
 
 
@@ -68,6 +100,12 @@ def juego():
     
     st = fondo.create_text(520,350, text = 'Press P to Start', fill = "black", font = ("8BIT WONDER",30) )
 
+    fondo.heart1 = cargar_img("Heart.png")
+    fondo.heart2 = cargar_img("Heart.png")
+    fondo.heart3 = cargar_img("Heart.png")
+    Life1 = fondo.create_image(600,720, anchor = NW, image = fondo.heart1)
+    Life2 = fondo.create_image(670,720, anchor = NW, image = fondo.heart2)
+    Life3 = fondo.create_image(730,720, anchor = NW, image = fondo.heart3)
     fondo.pack()
     #Función que determina la dirección de movimiento del submarino utilizando la lista de booleanos direc, 
     # dependiendo de la presión de teclas.
@@ -203,7 +241,19 @@ def juego():
 
 
     
-                
+    def check_lives(Life1, Life2, Life3):
+        global Life, Running, GameOver
+        if Life == 2:
+            fondo.delete(Life1)
+        elif Life == 1:
+            fondo.delete(Life2)
+        else:
+            if Life == 0:
+                fondo.delete(Life3)
+                Game_Over()
+        ventana.after(10, lambda : check_lives(Life1, Life2, Life3))
+    
+    check_lives(Life1, Life2, Life3)            
             
     def generar_misil():
         if Running:
@@ -229,8 +279,8 @@ def juego():
                 if (coordenadas[1]+ 34)  <= 0 :
                     fondo.delete(misil)
                 if coordenadas[1]< MisilEnemigoCoords[1]+60 and\
-                    coordenadas[0]+12 > MisilEnemigoCoords[0]+16 and\
-                    coordenadas[0]+24 < MisilEnemigoCoords[0]+48:
+                    coordenadas[0]+12 > MisilEnemigoCoords[0]+5 and\
+                    coordenadas[0]+24 < MisilEnemigoCoords[0]+60:
                     
                     fondo.delete(misil)
                     print('si funcionó')
@@ -251,8 +301,8 @@ def juego():
                 if MisilEnemigoCoords[1]+ 64 >= 730:
                     fondo.delete(obstaculo)
                 if  MisilCoords[1]< MisilEnemigoCoords[1]+60 and\
-                    MisilCoords[0]+12 > MisilEnemigoCoords[0]+16 and\
-                    MisilCoords[0]+24 < MisilEnemigoCoords[0]+48:
+                    MisilCoords[0]+12 > MisilEnemigoCoords[0]+5 and\
+                    MisilCoords[0]+24 < MisilEnemigoCoords[0]+60:
 
                     fondo.delete(obstaculo)
                 
@@ -284,7 +334,7 @@ def juego():
     
     
     def colision_misil_aux(misil):
-        global Running , GameOver 
+        global Running , GameOver , Life
             #Condicional de delimitación de lista de coordenadas cuando el obstáculo sale de la pantalla de juego.
         if fondo.type(misil) and Running:
             if pause:
@@ -297,7 +347,9 @@ def juego():
                         #Valores iniciales para iniciar perdida de juego
                         #Running = False
                         #GameOver = True
-                    print("colision")
+                    
+                    fondo.delete(misil)
+                    Life = Life - 1
                     
                     
         ventana.after(10,lambda : colision_misil_aux(misil))
