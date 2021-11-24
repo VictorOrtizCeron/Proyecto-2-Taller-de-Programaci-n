@@ -2,9 +2,9 @@
 def get_datas(current_score):
     with open("scores.txt", "r") as file:
         # Leer y dividir la informacion para dar formato
-        scores = [n.split("__") for n in file.read().split("\n") if len(n) >= 4]
+        scores = read_data_recurse(open("scores.txt",'r').readlines())
         # Organizar la lista de puntajes
-        scores.sort(key=lambda i: int(i[1]))
+        scores.sort(key=lambda x: int(x[1]))
         # Arreglo para invertir la lista de puntajes, para asi poder mostrar de mayor a menor
         scores = list(reversed(scores))
 
@@ -25,6 +25,16 @@ def get_datas(current_score):
     """
     return scores_formatted
 
+def read_data_recurse(lines, scores=[]):
+  if len(lines) == 0:
+    return scores
+  elif len(scores) > 10:
+    return scores
+  else:
+    n = lines[0]
+    if len(n) >= 4:
+      scores.append(n.split("__"))
+    return read_data_recurse(lines[1:],scores)
 
 def save_data(name, score):
     name_info = name
