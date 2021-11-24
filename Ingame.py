@@ -75,7 +75,7 @@ def juego():
             Btn_enter.place(x = 410, y = 460)
     
 
-
+    Restart()
     
 
     fondo = Canvas(ventana,width = 1024, height = 768)

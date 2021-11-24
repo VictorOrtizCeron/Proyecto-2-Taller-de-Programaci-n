@@ -1,24 +1,4 @@
 
-def show_scores(current_score):
-    #Funcion para printear resultados en la pantalla despues del juego y poder volver al menu principal
-    global name
-    Nombre = name.get()
-    Punt_fin = f"""
-    Gracias por 
-    
-    jugar Submarine escape! 
-    
-    He aca los datos de su partida
-    
-    Puntaje:
-    {current_score}
-    
-    Nombre:
-    {Nombre}
-    """
-
-    return Punt_fin
-
 def get_datas(current_score):
     with open("scores.txt", "r") as file:
         # Leer y dividir la informacion para dar formato
@@ -41,7 +21,7 @@ def get_datas(current_score):
 
     scores = "\n".join(format_name(n,s) for n, s in scores)
     scores_formatted = f"""
-    {scores}
+{scores}
     """
     return scores_formatted
 
