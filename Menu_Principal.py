@@ -28,9 +28,13 @@ Autores: José Ignacio Castillo y Víctor Ortiz Cerón
 
 Autor del módulo de Menú (Modificado por Víctor Ortiz): José Morales
 
-Autores de los módulos de juego: Víctor Ortiz Cerón con Asistencia de Ramses Gutierrez
+Autores de los módulos de juego: Víctor Ortiz Cerón, Ignacio Castillo con Asistencia de Ramses Gutierrez
 
 Autores del módulo Control_Pantallas: Víctor Ortiz Cerón con Asistencia de Ramses Gutierrez
+
+Autores del módulo de funciones de scoreboard y guardado de informacion: Ignacio Castillo Montero
+
+Autores de assets de Juego: Víctor Ortiz Cerón, Ignacio Castillo Montero
 
 """
 ventana = Tk()
