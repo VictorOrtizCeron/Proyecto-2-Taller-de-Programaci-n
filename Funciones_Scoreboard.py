@@ -20,7 +20,6 @@ def show_scores(current_score):
     return Punt_fin
 
 def get_datas(current_score):
-    save_data()
     with open("scores.txt", "r") as file:
         # Leer y dividir la informacion para dar formato
         scores = [n.split("__") for n in file.read().split("\n") if len(n) >= 4]
@@ -42,8 +41,7 @@ def get_datas(current_score):
 
     scores = "\n".join(format_name(n,s) for n, s in scores)
     scores_formatted = f"""
-    Felicidades, su puntaje es de: {current_score}
-{scores}
+    {scores}
     """
     return scores_formatted
 

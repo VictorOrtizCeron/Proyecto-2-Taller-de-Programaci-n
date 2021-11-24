@@ -5,7 +5,7 @@ from threading import Thread
 #from Funciones_Scoreboard import *
 from Funciones_Basicas import*
 from Control_Pantallas import *
-
+from Scoreboard import *
 about = """
 
 Sobre este juego:
@@ -35,7 +35,7 @@ Autores del módulo Control_Pantallas: Víctor Ortiz Cerón con Asistencia de Ra
 """
 ventana = Tk()
 ventana.title("Mars Under Fire")
-ventana.minsize(600,800)p
+ventana.minsize(600,800)
 ventana.resizable(width = NO, height = NO)
 
 fuente = fuente = ("8BIT WONDER",15)
@@ -120,7 +120,7 @@ Btn_Start2.place(x = 110, y = 400)
 Btn_about = Button(ventana, text = 'About this game',font = fuente, width = 20,command = abrir_about)
 Btn_about.place(x = 110, y = 500)
 
-Btn_Scores = Button(ventana, text = 'Scoreboard',font = fuente, width = 20,command = abrir_scores)
+Btn_Scores = Button(ventana, text = 'Scoreboard',font = fuente, width = 20,command = Score_Board)
 Btn_Scores.place(x = 110, y = 600)
 
 
