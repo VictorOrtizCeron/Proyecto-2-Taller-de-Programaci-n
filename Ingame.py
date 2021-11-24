@@ -243,7 +243,7 @@ def juego():
 
 
     def mover_misil_Enemigo(obstaculo):
-        global Running ,Speed, MisilEnemigoCoords, MisilCoords, colision
+        global Running ,Speed, MisilEnemigoCoords, MisilCoords, Score
         if fondo.type(obstaculo) and Running:
             if pause:
                 MisilEnemigoCoords = fondo.coords(obstaculo)
@@ -255,6 +255,10 @@ def juego():
                     MisilCoords[0]+24 < MisilEnemigoCoords[0]+48:
 
                     fondo.delete(obstaculo)
+                
+                    Score = Score + 2
+                    fondo.itemconfig(Scorer, text = Score)
+
 
 
                     
@@ -265,7 +269,7 @@ def juego():
 
 
     def generar_MisilEnemigo_aux():
-        global Running , GeneratorSpeed, MisilEnemy
+        global Running , GeneratorSpeed
         if Running:
             if pause:
                 x= randint(0,950)
