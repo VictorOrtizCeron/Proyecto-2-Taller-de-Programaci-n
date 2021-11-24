@@ -2,6 +2,9 @@
 
 
 
+from Ingame import Score
+
+
 def show_scores(current_score):
     #Funcion para printear resultados en la pantalla despues del juego y poder volver al menu principal
     global name
@@ -52,13 +55,13 @@ def get_datas(current_score):
 
 
 def save_data():
-    global name, Diff 
+    global name, Score 
     name_info = name.get()
 
     with open("scores.txt", "r") as f:
         datas = f.read()
 
-    datas += name_info + "__" + str(Scr) + "\n"
+    datas += name_info + "__" + str(Score) + "\n"
 
     with open("scores.txt", "w") as f:
         f.write(datas)
