@@ -18,7 +18,7 @@ salto = True
 Speed = 45
 MisilCoords = [0,0]
 MisilEnemigoCoords = [0,0]
-MisilEnemy = None
+colision = False
 
 def crear_ventana():
     global ventana
@@ -203,10 +203,6 @@ def juego():
 
 
     
-
-
-               
-
                 
             
     def generar_misil():
@@ -238,27 +234,34 @@ def juego():
                     
                     fondo.delete(misil)
                     print('si funcionó')
-                    coordenadas = fondo.coords(Tanque)
+                    
                 else:
                     fondo.move(misil,0,-1)
 
                 MisilCoords = coordenadas   
-            ventana.after(10, lambda : mover_misil(misil))
+            ventana.after(5, lambda : mover_misil(misil))
 
 
     def mover_misil_Enemigo(obstaculo):
-        global Running ,Speed, MisilEnemigoCoords, MisilCoords
+        global Running ,Speed, MisilEnemigoCoords, MisilCoords, colision
         if fondo.type(obstaculo) and Running:
             if pause:
                 MisilEnemigoCoords = fondo.coords(obstaculo)
                 
                 if MisilEnemigoCoords[1]+ 64 >= 730:
                     fondo.delete(obstaculo)
+                if  MisilCoords[1]< MisilEnemigoCoords[1]+60 and\
+                    MisilCoords[0]+12 > MisilEnemigoCoords[0]+16 and\
+                    MisilCoords[0]+24 < MisilEnemigoCoords[0]+48:
+
+                    fondo.delete(obstaculo)
+
+
                     
                 else:
-                    fondo.move(obstaculo,0,8)
+                    fondo.move(obstaculo,0,5)
                                     
-            ventana.after(80,lambda: mover_misil_Enemigo(obstaculo))
+            ventana.after(50,lambda: mover_misil_Enemigo(obstaculo))
 
 
     def generar_MisilEnemigo_aux():
@@ -268,6 +271,7 @@ def juego():
                 x= randint(0,950)
                 misilEnemigo = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)
                 mover_misil_Enemigo(misilEnemigo)
+                colision_misil_aux(misilEnemigo)
                     
                     
             ventana.after(GeneratorSpeed ,lambda: generar_MisilEnemigo_aux())
