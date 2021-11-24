@@ -15,6 +15,7 @@
 #Importación de las bibliotecas necesarias para el funcionamiento de las funciones.
 from tkinter import *
 import Ingame
+
 #import Ingame2
 #import Ingame3
 

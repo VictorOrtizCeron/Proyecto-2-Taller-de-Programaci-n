@@ -13,11 +13,12 @@ pause = False
 Nombre = "Unknown"
 GameOver = False
 Quit = False
-GeneratorSpeed = 1000
+GeneratorSpeed = 2000
 salto = True
 Speed = 45
-MisilCoords = 0
-MisilEnemigoCoords = 0
+MisilCoords = [0,0]
+MisilEnemigoCoords = [0,0]
+MisilEnemy = None
 
 def crear_ventana():
     global ventana
@@ -43,7 +44,7 @@ def juego():
     
 
 
-    global direc,Running
+    
 
     fondo = Canvas(ventana,width = 1024, height = 768)
     ventana.fondo = cargar_img('FONDOMENU2.png')#Se establece la imagen de fondo del menu
@@ -104,7 +105,8 @@ def juego():
             if event.keysym == 'Right':
                 direc[0] = False
             if event.keysym == 'x':
-                disparo()
+                generar_misil()
+            
     
     def volar():
         global direc , salto
@@ -115,47 +117,6 @@ def juego():
             fondo.itemconfig(Tanque,image = fondo.Tanque_img )
         ventana.after(5,volar)
     volar()
-
-
-    def disparo():
-        if Running:
-            if pause:
-                generar_misil()
-                
-    def generar_misil():
-        global MisilEnemigoCoords
-        coordenadas = fondo.coords(Tanque)
-        x = coordenadas[0]
-        y = coordenadas[1]
-        misil = fondo.create_image(x+25,y-20,anchor = NW , image= fondo.Misil)
-        mover_misil(misil)
-        misiles_colision(misil,MisilEnemigoCoords)
-
-    
-    def mover_misil(misil):
-        global MisilEnemigoCoords
-        MisilCoords = fondo.coords(misil)
-        if fondo.type(misil) and Running:
-            if pause:
-                coordenadas = fondo.coords(misil)
-                if coordenadas[1]+ 34  <= 0 :
-                    fondo.delete(misil)
-                else:
-                    fondo.move(misil,0,-8)
-                    MisilCoords = coordenadas
-            ventana.after(30,lambda: mover_misil(misil))
-
-    def misiles_colision(misil,MisilEnemigoCoords):
-        MisilCoords = fondo.coords(misil)
-        if (MisilCoords[0]+12) < (MisilEnemigoCoords[0] + 16) and \
-            (MisilCoords[0]+ 24)>(MisilEnemigoCoords[0]+48) and \
-            (MisilCoords[1]) < (MisilEnemigoCoords[1]+60) and \
-            (MisilCoords[1] + 28 ) > (MisilEnemigoCoords[1]+8):
-            fondo.delete(misil)
-            print("lmao")
-        ventana.after(1,lambda:misiles_colision)
-                    
-
 
     def mover():
         global direc,salto
@@ -172,7 +133,8 @@ def juego():
                 if direc[3] and coordenadas[1] > 300 and salto == True:
                         fondo.move(Tanque, 0,-8)
 
-            ventana.after(5,mover)  
+            ventana.after(10,mover)  
+    mover()
     
     def salto_aux():
         global salto
@@ -242,37 +204,80 @@ def juego():
 
     
 
-    def mover_misil_Enemigo(obstaculo):
-        global Running ,Speed, MisilEnemigoCoords
-        if fondo.type(obstaculo) and Running:
-            if pause:
-                coordenadas = fondo.coords(obstaculo)
-                if coordenadas[1]+ 64 >= 730:
-                    fondo.delete(obstaculo)
-                else:
-                    fondo.move(obstaculo,0,10)
-                    MisilEnemigoCoords = coordenadas
-            ventana.after(Speed,lambda: mover_misil_Enemigo(obstaculo))
 
+               
+
+                
+            
+    def generar_misil():
+        if Running:
+            if pause:
+                global MisilEnemigoCoords,MisilCoords
+                coordenadas = fondo.coords(Tanque)
+                x = coordenadas[0]
+                y = coordenadas[1]
+                misil = fondo.create_image(x+25,y-20,anchor = NW , image= fondo.Misil)
+                mover_misil(misil)
+                
+            
     
 
-    #Función que genera  los obstáculos , y luego los borra los obstáculos cuando sale de la pantalla de juego.
+
+    def mover_misil(misil):
+        global MisilEnemigoCoords, MisilCoords
+        if fondo.type(misil) and Running:
+            if pause:
+                coordenadas = fondo.coords(misil)
+                
+                
+                if (coordenadas[1]+ 34)  <= 0 :
+                    fondo.delete(misil)
+                if coordenadas[1]< MisilEnemigoCoords[1]+60 and\
+                    coordenadas[0]+12 > MisilEnemigoCoords[0]+16 and\
+                    coordenadas[0]+24 < MisilEnemigoCoords[0]+48:
+                    
+                    fondo.delete(misil)
+                    print('si funcionó')
+                    coordenadas = fondo.coords(Tanque)
+                else:
+                    fondo.move(misil,0,-1)
+
+                MisilCoords = coordenadas   
+            ventana.after(10, lambda : mover_misil(misil))
+
+
+    def mover_misil_Enemigo(obstaculo):
+        global Running ,Speed, MisilEnemigoCoords, MisilCoords
+        if fondo.type(obstaculo) and Running:
+            if pause:
+                MisilEnemigoCoords = fondo.coords(obstaculo)
+                
+                if MisilEnemigoCoords[1]+ 64 >= 730:
+                    fondo.delete(obstaculo)
+                    
+                else:
+                    fondo.move(obstaculo,0,8)
+                                    
+            ventana.after(80,lambda: mover_misil_Enemigo(obstaculo))
+
+
     def generar_MisilEnemigo_aux():
-        global Running , GeneratorSpeed
+        global Running , GeneratorSpeed, MisilEnemy
         if Running:
             if pause:
                 x= randint(0,950)
-                misilEnemigo = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)    
+                misilEnemigo = fondo.create_image(x,0, anchor = NW, image = fondo.MisilEnemigo)
                 mover_misil_Enemigo(misilEnemigo)
-                colision_misil_aux(misilEnemigo)
-                
-            ventana.after(GeneratorSpeed,generar_MisilEnemigo_aux)
+                    
+                    
+            ventana.after(GeneratorSpeed ,lambda: generar_MisilEnemigo_aux())
 
     generar_MisilEnemigo_aux()
     
+    
     def colision_misil_aux(misil):
         global Running , GameOver 
-        #Condicional de delimitación de lista de coordenadas cuando el obstáculo sale de la pantalla de juego.
+            #Condicional de delimitación de lista de coordenadas cuando el obstáculo sale de la pantalla de juego.
         if fondo.type(misil) and Running:
             if pause:
                 coordenadas_Tanque = fondo.coords(Tanque)
@@ -281,14 +286,12 @@ def juego():
                     (coordenadas_misil[0]+ 48)>(coordenadas_Tanque[0]+16) and \
                     (coordenadas_misil[1]+12) < (coordenadas_Tanque[1]+64) and \
                     (coordenadas_misil[1] + 60 ) > (coordenadas_Tanque[1]+20):
-                    #Valores iniciales para iniciar perdida de juego
-                    #Running = False
-                    #GameOver = True
+                        #Valores iniciales para iniciar perdida de juego
+                        #Running = False
+                        #GameOver = True
                     print("colision")
                     
                     
-            ventana.after(1,lambda : colision_misil_aux(misil))
-
-    
+        ventana.after(10,lambda : colision_misil_aux(misil))
     
     
