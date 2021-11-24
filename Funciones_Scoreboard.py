@@ -1,10 +1,6 @@
 
 
 
-
-from Ingame import Score, name
-
-
 def show_scores(current_score):
     #Funcion para printear resultados en la pantalla despues del juego y poder volver al menu principal
     global name

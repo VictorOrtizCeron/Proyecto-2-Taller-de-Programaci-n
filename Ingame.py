@@ -2,6 +2,7 @@ from tkinter import *
 from Funciones_Basicas import *
 from random import randint
 from threading import *
+from Funciones_Scoreboard import *
 
 from Funciones_Scoreboard import save_data
 
@@ -322,10 +323,11 @@ def juego():
             fondo.delete(Life1)
         elif Life == 1:
             fondo.delete(Life2)
-        elif Life == 0:
-            fondo.delete(Life3)
-            game_over()
-        ventana.after(1000, lambda : check_lives(Life1, Life2, Life3))
+        else:
+            if Life == 0:
+                fondo.delete(Life3)
+                game_over()
+        ventana.after(10, lambda : check_lives(Life1, Life2, Life3))
     
     check_lives(Life1, Life2, Life3)
 
