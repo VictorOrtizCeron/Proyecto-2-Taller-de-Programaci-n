@@ -37,7 +37,7 @@ def Score_Board():
     C_Scores.fondo = cargar_img('FONDOMENU.png')
     Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)
     C_Scores.create_text(300,80, text = 'SCOREBOARD', fill = "Black", font = ("8BIT WONDER",25) )
-    C_Scores.create_text(300,250, text = get_datas(0), fill = "Black", font = ("Arial",20) )
+    C_Scores.create_text(300,400, text = get_datas(0), fill = "Black", font = ("Arial",20) )
     C_Scores.pack()
     
     Result.protocol("WM_DELETE_WINDOW",Ir_a_Menu)
