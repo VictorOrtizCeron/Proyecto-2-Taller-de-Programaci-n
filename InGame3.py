@@ -17,6 +17,7 @@ from tkinter import *
 from Funciones_Basicas import *
 from random import randint
 from threading import *
+from Funciones_Scoreboard import *
 
 #Definición de variables globales
 Tiempo = 0 #Tiempo Transcurrido
