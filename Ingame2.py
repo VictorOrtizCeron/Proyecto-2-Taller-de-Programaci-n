@@ -47,6 +47,18 @@ def crear_ventana():#Crea la ventana principal de juego
     ventana.resizable(width = NO, height = NO)
 
 def juego():#Función principal de juego
+    
+    cancion = cargarMP3('MenuSong.mp3')
+    def Music():
+        global Running
+        if Running:
+            reproducir_cancion(cancion)
+        else:
+            detener_cancion()
+        ventana.after(61000,Music)
+    
+    Music()
+
 
     def Restart():#Función que reinicia todas las variables globales a sus datos originales
         global direc,Running,GameOver,ventana,pause, Tiempo,Score,Quit,level,GeneratorSpeed,Speed,name,Life,vel
