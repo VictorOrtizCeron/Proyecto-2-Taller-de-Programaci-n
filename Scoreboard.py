@@ -22,19 +22,21 @@ from Control_Pantallas import *
 from Funciones_Scoreboard import *
 from Ingame import Score as Scr
 
+
 def Score_Board():
+    
     def Ir_a_Menu():
         Result.destroy()
     Result = Toplevel()
     Result.title("Resultados Partida")
     Result.minsize(420, 530)
+    data = get_datas(0)
     Result.resizable(width=NO, height=NO)
     L_about = Label(
         Result,
-        text=get_datas(0),
+        text=data,
         font=("Consolas", 10),
     )
-
     Back = Button(
         Result,
         text="Menu Principal",
@@ -42,7 +44,9 @@ def Score_Board():
         fg="white",
         font="Arial",
         command=Ir_a_Menu,
+        
     )
+    
     L_about.place(x=50, y=50)
     Back.place(x=110, y=360)
 

@@ -1,8 +1,10 @@
+from os import close
+
+
 def get_datas(current_score):
-    with open("scores.txt", "r") as file:
-        scores = read_data_recurse(open("scores.txt",'r').readlines())
-        scores.sort(key=lambda x: int(x[1]))
-        scores = list(reversed(scores))
+    scores = read_data_recurse(open("scores.txt",'r').readlines())
+    scores.sort(key=lambda x: int(x[1]))
+    scores = list(reversed(scores))
 
     if len(scores) > 10:
         scores = scores[:10]
@@ -19,6 +21,7 @@ def get_datas(current_score):
 {scores}
     """
     return scores_formatted
+    
 
 def read_data_recurse(lines, scores=[]):
   if len(lines) == 0:
