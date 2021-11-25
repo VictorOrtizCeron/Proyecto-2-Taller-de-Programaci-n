@@ -1,4 +1,3 @@
-
 """
  Instituto Tecnológico de Costa Rica
                     Ingeniería en Computadores
@@ -53,10 +52,10 @@ def juego():#Función principal de juego
         Running = True
         GameOver = False
         pause = False
-        Tiempo = 0
+        Tiempo = 35
         Score= 0
         Quit = False
-        level = 1
+        level = 2
         Speed = 45
         GeneratorSpeed = 1000
         Life = 3
@@ -217,24 +216,12 @@ def juego():#Función principal de juego
         global Tiempo , Score , level , vel
         if Running:
             if pause:
-                if level == 1:
-                    #Condición de  nivel 1 , asi como incrementos de dificultad 
-                    #Sube nivel
-                    if Tiempo % 40 == 0 and Tiempo != 0:
-                        Tiempo = Tiempo + 1
-                        fondo.itemconfig(Temporizador, text = Tiempo)
-                        level = level + 1
-                        fondo.itemconfig(lvl,text = level)
-                    else:
-                        Tiempo = Tiempo + 1
-                        fondo.itemconfig(Temporizador, text = Tiempo)
-                        
-
+                
                 if level == 2:
                     #Condición de  nivel 2 , asi como incrementos de dificultad.
                     vel = 13
                     #Sube nivel
-                    if Tiempo % 80 == 0 and Tiempo != 0:
+                    if Tiempo % 40 == 0 and Tiempo != 0:
                         Tiempo = Tiempo + 1
                         fondo.itemconfig(Temporizador, text = Tiempo)
                         level = level + 1
@@ -361,5 +348,3 @@ def juego():#Función principal de juego
         Running = False
 
     ventana.protocol("WM.DELETE_WINDOW", stop)
-    
-    

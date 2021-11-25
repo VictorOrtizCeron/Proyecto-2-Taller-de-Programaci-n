@@ -1,4 +1,3 @@
-
 """
  Instituto Tecnológico de Costa Rica
                     Ingeniería en Computadores
@@ -56,7 +55,7 @@ def juego():#Función principal de juego
         Tiempo = 0
         Score= 0
         Quit = False
-        level = 1
+        level = 3
         Speed = 45
         GeneratorSpeed = 1000
         Life = 3
@@ -232,7 +231,7 @@ def juego():#Función principal de juego
 
                 if level == 2:
                     #Condición de  nivel 2 , asi como incrementos de dificultad.
-                    vel = 13
+                    vel = 15
                     #Sube nivel
                     if Tiempo % 80 == 0 and Tiempo != 0:
                         Tiempo = Tiempo + 1
@@ -361,5 +360,3 @@ def juego():#Función principal de juego
         Running = False
 
     ventana.protocol("WM.DELETE_WINDOW", stop)
-    
-    
