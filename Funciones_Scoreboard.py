@@ -12,7 +12,7 @@
     Entradas: Score, Name y scores.txt
     Salidas: Escribir en scores.txt, y retornar la informacion de los puntajes en formato de string.
 """
-from os import close
+
 
 
 def get_datas(current_score):
