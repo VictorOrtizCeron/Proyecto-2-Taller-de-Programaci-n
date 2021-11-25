@@ -1,10 +1,26 @@
 
 
+"""
+ Instituto Tecnológico de Costa Rica
+                    Ingeniería en Computadores
+    Lenguaje: Python 3.9.6
+    Autores:  Victor Ortiz Ceron(vortiz@estudiantec.cr) , José Ignacio Castillo()
+    Tutor: Ramses Gutiérrez
+    Versión: 1.0
+    Fecha última Modificación: 24/11/2021
+    Módulo: Funciones_Scoreboard.py
+    Descripción del módulo: Este modulo se encarga de poder hacer que la scoreboard funcione, en este caso usando get datas y read data para poder extraer la informacion de puntajes y
+    ordenarla para el display que lo hace el scoreboard.py, 
+    Entradas: Score, Name y scores.txt
+    Salidas: Escribir en scores.txt, y retornar la informacion de los puntajes en formato de string.
+"""
+from os import close
+
+
 def get_datas(current_score):
-    with open("scores.txt", "r") as file:
-        scores = read_data_recurse(open("scores.txt",'r').readlines())
-        scores.sort(key=lambda x: int(x[1]))
-        scores = list(reversed(scores))
+    scores = read_data_recurse(open("scores.txt",'r').readlines(), scores=[])
+    scores.sort(key=lambda x: int(x[1]))
+    scores = list(reversed(scores))
 
     if len(scores) > 10:
         scores = scores[:10]
@@ -21,6 +37,7 @@ def get_datas(current_score):
 {scores}
     """
     return scores_formatted
+    
 
 def read_data_recurse(lines, scores=[]):
   if len(lines) == 0:
@@ -45,21 +62,5 @@ def save_data(name, score):
     with open("scores.txt", "w") as f:
         f.write(datas)
         #escribir la informacion en el archivo de texto
-
-"""
- Instituto Tecnológico de Costa Rica
-                    Ingeniería en Computadores
-
-    Lenguaje: Python 3.9.6
-    Autores:  Victor Ortiz Ceron(vortiz@estudiantec.cr) , José Ignacio Castillo()
-    Tutor: Ramses Gutiérrez
-    Versión: 1.0
-    Fecha última Modificación: 24/11/2021
-    Módulo: Funciones_Scoreboard.py
-    Descripción del módulo: Este modulo se encarga de poder hacer que la scoreboard funcione, en este caso usando get datas y read data para poder extraer la informacion de puntajes y
-    ordenarla para el display que lo hace el scoreboard.py, 
-    Entradas: Score, Name y scores.txt
-    Salidas: Escribir en scores.txt, y retornar la informacion de los puntajes en formato de string.
-"""
 
 

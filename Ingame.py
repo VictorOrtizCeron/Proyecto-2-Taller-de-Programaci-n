@@ -234,7 +234,7 @@ def juego():#Función principal de juego
 
                 if level == 2:
                     #Condición de  nivel 2 , asi como incrementos de dificultad.
-                    vel = 13
+                    vel = 15
                     #Sube nivel
                     if Tiempo % 80 == 0 and Tiempo != 0:
                         Tiempo = Tiempo + 1
@@ -249,7 +249,7 @@ def juego():#Función principal de juego
 
                 if level == 3:
                         #Condición de  nivel 3 , ya no hay más bonos o niveles. 
-                        vel = 17
+                        vel = 20
                         Tiempo = Tiempo + 1
                         fondo.itemconfig(Temporizador, text = Tiempo)
                                       
@@ -315,12 +315,14 @@ def juego():#Función principal de juego
                     fondo.delete(obstaculo)
                 if  MisilCoords[1]< MisilEnemigoCoords[1]+60 and\
                     MisilCoords[0]+12 > MisilEnemigoCoords[0]+5 and\
-                    MisilCoords[0]+24 < MisilEnemigoCoords[0]+60:#Condición de colisión entre misiles
+                    MisilCoords[0]+24 < MisilEnemigoCoords[0]+60: #Condición de colisión entre misiles
                     fondo.delete(obstaculo)
                     Score = Score + 2
                     fondo.itemconfig(Scorer, text = Score)
 
 
+
+                    
                 else:
                     fondo.move(obstaculo,0,vel)
                                     

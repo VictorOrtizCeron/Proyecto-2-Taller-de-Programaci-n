@@ -24,6 +24,8 @@ from Ingame import Score as Scr
 
 def Score_Board():
     def Ir_a_Menu():
+        data = ''
+        L_about.delete
         Result.destroy()
     Result = Toplevel()
     Result.title("Resultados Partida")

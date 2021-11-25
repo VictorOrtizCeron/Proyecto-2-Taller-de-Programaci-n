@@ -85,7 +85,8 @@ def juego():#Función principal de juego
                 print(Nombre)
                 print(Score)
                 fondo.create_text(520,550, text = ('Score Saved'), fill = "black", font = ("8BIT WONDER",20) )
-
+                save_data(Nombre,Score)
+                
             #Crea el botón para capturar el nombre.
             Btn_enter = Button(ventana, text = 'Enter',font = ('8BIT WONDER',20), width = 7,command = get_Name)
             Btn_enter.place(x = 410, y = 460)

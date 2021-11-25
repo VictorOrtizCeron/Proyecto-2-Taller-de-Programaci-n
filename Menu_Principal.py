@@ -92,9 +92,19 @@ def abrir_about():
         V_about.destroy()
     V_about.protocol("WM_DELETE_WINDOW",destroy_window)
 
+def abrir_scoreboard():
+    detener_cancion()
+    V_Scores = Toplevel()
+    V_Scores.title("Sobre este Juego")
+    V_Scores.minsize(600,800)
+    V_Scores.resizable(width = NO, height = NO)
+    ventana.withdraw()
+    C_Scores = Canvas(V_Scores, width = 600 , height = 800)
+    C_Scores.place(x = 0, y = 0)
+    C_Scores.fondo = cargar_img('FONDOMENU.png')
+    Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)
+    C_Scores.pack()
 
-
-    
 
 def Empezar_Juego():
     global MenuMusic

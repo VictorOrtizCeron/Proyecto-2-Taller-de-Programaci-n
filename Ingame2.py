@@ -20,6 +20,7 @@ from random import randint
 from threading import *
 from Funciones_Scoreboard import *
 
+
 #Definición de variables globales
 Tiempo = 0 #Tiempo Transcurrido
 Score = 0 #Puntaje obtenido
