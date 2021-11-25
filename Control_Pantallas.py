@@ -1,7 +1,6 @@
 """
  Instituto Tecnológico de Costa Rica
                     Ingeniería en Computadores
-
     Lenguaje: Python 3.9.6
     Autor:  Victor Ortiz Ceron(vortiz@estudiantec.cr) 
     Tutor: Ramses Gutiérrez
@@ -15,6 +14,9 @@
 #Importación de las bibliotecas necesarias para el funcionamiento de las funciones.
 from tkinter import *
 import Ingame
+import Ingame2
+import Ingame3
+
 #import Ingame2
 #import Ingame3
 
@@ -32,7 +34,7 @@ def abrir_juego(Main):
     Ingame.ventana.protocol("WM_DELETE_WINDOW",cerrar_juego)
 
 #Función que abre la ventana de juego y esconde el menú cuando se escoge el nivel 2.
-"""
+
 def abrir_juego2(Main):
     global main , close
     main = Main
@@ -49,14 +51,14 @@ def abrir_juego3(Main):
     Ingame3.crear_ventana()
     Ingame3.juego()
     Ingame3.ventana.protocol("WM_DELETE_WINDOW",cerrar_juego3)
-"""       
+      
 #Función que cierra la venta de juego, abre la del menú y destruye la de juego cuando se escoge el nivel 1.
 def cerrar_juego():
     main.deiconify()
     Ingame.ventana.destroy()
 
 #Función que cierra la venta de juego, abre la del menú y destruye la de juego cuando se escoge el nivel 2.   
-"""
+
 def cerrar_juego2():
     main.deiconify()
     Ingame2.ventana.destroy()
@@ -65,4 +67,3 @@ def cerrar_juego2():
 def cerrar_juego3():
     main.deiconify()
     Ingame3.ventana.destroy()
-    """
