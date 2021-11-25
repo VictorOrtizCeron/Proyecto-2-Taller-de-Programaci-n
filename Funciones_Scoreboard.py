@@ -2,7 +2,7 @@ from os import close
 
 
 def get_datas(current_score):
-    scores = read_data_recurse(open("scores.txt",'r').readlines())
+    scores = read_data_recurse(open("scores.txt",'r').readlines(), scores=[])
     scores.sort(key=lambda x: int(x[1]))
     scores = list(reversed(scores))
 
