@@ -12,7 +12,7 @@
     Entradas: Informacion de 'get_datas' de funciones_scoreboard.py
     Salidas: display de la scoreboard
 """
-
+#Importaciones de módulos y bibliotecas necesarias
 from tkinter import *
 from os import path
 import vlc
@@ -22,24 +22,24 @@ from Control_Pantallas import *
 from Funciones_Scoreboard import *
 
 
-def Score_Board():
+def Score_Board():#creacion de la ventana del scoreboard
 
-    def Ir_a_Menu():
+    def Ir_a_Menu():#Función para cerrar la ventana de puntajes
         Result.destroy()
 
 
-    Result = Toplevel()
-    Result.title("Resultados Partida")
-    Result.minsize(600, 800)
-    C_Scores = Canvas(Result, width = 600 , height = 800)
-    Result.resizable(width=NO, height=NO)
-    C_Scores.place(x = 0, y = 0)
-    C_Scores.fondo = cargar_img('FONDOMENU.png')
-    Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)
-    C_Scores.create_text(300,80, text = 'SCOREBOARD', fill = "Black", font = ("8BIT WONDER",25) )
-    C_Scores.create_text(300,400, text = get_datas(0), fill = "Black", font = ("Arial",20) )
-    C_Scores.pack()
+    Result = Toplevel()#creacion de la ventana de puntajes
+    Result.title("Resultados Partida")#nombre de la ventana 
+    Result.minsize(600, 800)#tamaño de la ventana
+    C_Scores = Canvas(Result, width = 600 , height = 800)#creacion del canvas
+    Result.resizable(width=NO, height=NO)#no se puede cambiar el tamaño de la ventana
+    C_Scores.place(x = 0, y = 0)#posicion del canvas
+    C_Scores.fondo = cargar_img('FONDOMENU.png')#carga la imagen de fondo
+    Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)#creacion de la imagen de fondo
+    C_Scores.create_text(300,80, text = 'SCOREBOARD', fill = "Black", font = ("8BIT WONDER",25) )#creacion del encabezado de la ventana
+    C_Scores.create_text(300,400, text = get_datas(0), fill = "Black", font = ("Arial",20) )#creación del texto de los puntajes
+    C_Scores.pack()#pack para que se vea la ventana
     
-    Result.protocol("WM_DELETE_WINDOW",Ir_a_Menu)
+    Result.protocol("WM_DELETE_WINDOW",Ir_a_Menu)#función que se ejecuta al cerrar la ventana
 
-    Result.mainloop()
+    Result.mainloop()#loop para que se vea la ventana

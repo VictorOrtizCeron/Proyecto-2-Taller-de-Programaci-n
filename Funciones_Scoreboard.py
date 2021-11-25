@@ -1,5 +1,3 @@
-
-
 """
  Instituto Tecnológico de Costa Rica
                     Ingeniería en Computadores
@@ -18,28 +16,31 @@ from os import close
 
 
 def get_datas(current_score):
-    scores = read_data_recurse(open("scores.txt",'r').readlines(), scores=[])
-    scores.sort(key=lambda x: int(x[1]))
+    scores = read_data_recurse(open("scores.txt",'r').readlines(), scores=[])#abrir el archivo de  texto y reiniciar la variable scores
+    scores.sort(key=lambda x: int(x[1]))#key lambada actualiza el orden de los puntajes
     scores = list(reversed(scores))
-
+    #funciones las cuales se encargan de ordenar los puntajes de mayor a menor
     if len(scores) > 10:
-        scores = scores[:10]
+        scores = scores[:10]#define que solo se muestran los 10 primeros puntajes
 
     def format_name(name,score):
         if len(name) > 10:
-            name = name[:10] + "..."
+            name = name[:10] + "..."#limite a que tanto del nombre se pueda mostrar
         goal = 13 - len(name)
         total_name = name+" "*goal
-        return f"NAME: {total_name} | SCORE: {score}"
+        return f"NAME: {total_name} | SCORE: {score}"#formato de display
+    #funcion que se encarga de formatear los nombres y puntajes para que se puedan mostrar en el scoreboard
 
     scores = "\n".join(format_name(n,s) for n, s in scores)
     scores_formatted = f"""
 {scores}
     """
     return scores_formatted
+    #retorna la informacion de los puntajes en formato de string
     
 
 def read_data_recurse(lines, scores=[]):
+  #funcion que se encarga de leer el archivo de texto y guardarlo en una variable
   if len(lines) == 0:
     return scores
   elif len(scores) > 10:
@@ -47,7 +48,7 @@ def read_data_recurse(lines, scores=[]):
   else:
     n = lines[0]
     if len(n) >= 4:
-      scores.append(n.split("__"))
+      scores.append(n.split("__"))#divide los puntajes y los nombres con el underscore
     return read_data_recurse(lines[1:],scores)
 #save_data es una funcion para poder guardar los datos en el archivo de texto
 def save_data(name, score):

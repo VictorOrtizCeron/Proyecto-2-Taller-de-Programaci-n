@@ -1,12 +1,27 @@
+"""
+ Instituto Tecnológico de Costa Rica
+                    Ingeniería en Computadores
+
+    Lenguaje: Python 3.9.6
+    Autores:  Victor Ortiz Ceron(vortiz@estudiantec.cr) , José Ignacio Castillo(jicasmo0482@estudiantec.cr)
+    Tutor: Ramses Gutiérrez
+    Versión: 1.0
+    Fecha última Modificación: 24/11/2021
+    Módulo: Funciones_Scoreboard.py
+    Descripción del módulo: Este modulo es el scoreboard en si, el cual gracias a Funciones_Scoreboard 
+    Entradas: Las entradas de este juego consisten en los clicks del jugador sobre los botones
+    Salidas: Dependiendo del botón, puede inciar la ventana de about, el juego en el nivel 1, 2 o 3 o la ventana de puntajes.
+"""
+#Importación de bibliotecas y módulos 
 from tkinter import *
 from os import path
 import vlc
 from threading import Thread
-#from Funciones_Scoreboard import *
 from Funciones_Basicas import*
 from Control_Pantallas import *
 from Scoreboard import *
 
+#Texto de about del juego
 about = """
 
 Sobre este juego:
@@ -29,18 +44,22 @@ Autores: José Ignacio Castillo y Víctor Ortiz Cerón
 
 Autor del módulo de Menú (Modificado por Víctor Ortiz): José Morales
 
-Autores de los módulos de juego: Víctor Ortiz Cerón con Asistencia de Ramses Gutierrez
+Autores de los módulos de juego: Víctor Ortiz Cerón y Jose Ingnacio Castillo con Asistencia de Ramses Gutierrez
 
 Autores del módulo Control_Pantallas: Víctor Ortiz Cerón con Asistencia de Ramses Gutierrez
 
+Autor del módulo ScoreBoard y Funciones_Scoreboard: Jose Ignacio Castillo
+
 """
+#Inicializa la ventana de menú
 ventana = Tk()
 ventana.title("Mars Under Fire")
 ventana.minsize(600,800)
 ventana.resizable(width = NO, height = NO)
 
-fuente = fuente = ("8BIT WONDER",15)
+fuente = fuente = ("8BIT WONDER",15) 
 
+#Definición de la pantalla sobre la cuál van a colocarse los elementos
 C_menu = Canvas(ventana, width = 600 , height = 800)
 C_menu.place(x = 0, y = 0)
 
@@ -51,12 +70,12 @@ C_menu.titulo = cargar_img('Titulo.png')#Se establece la imagen de fondo del men
 Fondo1 = C_menu.create_image(5,10,anchor = NW, image = C_menu.titulo)
 
 
-
+#Variables de reprodución de música
 MenuMusic = True
 reproductor = vlc.MediaPlayer()
 cancion = cargarMP3('MenuSong.mp3')
 
-def MenuLoop():
+def MenuLoop():#Función que reproduce la música 
     global MenuMusic
     if MenuMusic:
         reproducir_cancion(cancion)
@@ -67,7 +86,7 @@ def MenuLoop():
 MenuLoop()
 
 
-def abrir_about():
+def abrir_about():#Función que abre la ventana de about, con el texto relacionado al juego
     detener_cancion()
     V_about = Toplevel()
     V_about.title("Sobre este Juego")
@@ -92,41 +111,29 @@ def abrir_about():
         V_about.destroy()
     V_about.protocol("WM_DELETE_WINDOW",destroy_window)
 
-def abrir_scoreboard():
-    detener_cancion()
-    V_Scores = Toplevel()
-    V_Scores.title("Sobre este Juego")
-    V_Scores.minsize(600,800)
-    V_Scores.resizable(width = NO, height = NO)
-    ventana.withdraw()
-    C_Scores = Canvas(V_Scores, width = 600 , height = 800)
-    C_Scores.place(x = 0, y = 0)
-    C_Scores.fondo = cargar_img('FONDOMENU.png')
-    Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)
-    C_Scores.pack()
 
-
-def Empezar_Juego():
+def Empezar_Juego():#Función que inicializa el juego en el nivel 1
     global MenuMusic
     detener_cancion()
     MenuMusic = False
     ventana.withdraw()    
     abrir_juego(ventana)
 
-def Empezar_Juego2():
+def Empezar_Juego2():#Función que inicializa el juego en el nivel 2
     global MenuMusic
     detener_cancion()
     MenuMusic = False
     ventana.withdraw()    
     abrir_juego2(ventana)
 
-def Empezar_Juego3():
+def Empezar_Juego3():#Función que inicializa el juego en el nivel 3
     global MenuMusic
     detener_cancion()
     MenuMusic = False
     ventana.withdraw()    
     abrir_juego3(ventana)
 
+#Definición de botones de la pantalla de menú
 Btn_Start = Button(ventana, text = 'Level 1',font = fuente, width = 20,command = Empezar_Juego)
 Btn_Start.place(x = 110, y = 200)
 

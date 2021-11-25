@@ -9,7 +9,9 @@
     Fecha última Modificación: 22/10/2021
     Módulo: Control_Pantallas.py
     Descripción del módulo: Este es un módulo auxiliar hecho con la tutoría de Ramses Gutiérrez, con el fin de manejar las ventanas del juego
-    de forma no local en las diferentes etapas de su ejecución.  
+    de forma no local en las diferentes etapas de su ejecución.
+    Entrada: Recibe un valor de ventana, que guarda en main
+    Salida: Cierra la ventana main y empieza el juego según el nivel escogido. Al terminar, abre nuevamente la ventana main  
 """
 
 #Importación de las bibliotecas necesarias para el funcionamiento de las funciones.
@@ -17,9 +19,6 @@ from tkinter import *
 import Ingame
 import Ingame2
 import Ingame3
-
-#import Ingame2
-#import Ingame3
 
 #Variable maun utilizada para referirse a la ventana del menu principal una vez abierto el juego en los distintos niveles.
 main = None

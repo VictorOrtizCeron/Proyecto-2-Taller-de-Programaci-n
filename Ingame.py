@@ -12,6 +12,9 @@
     Descripción del módulo: Este es un módulo auxiliar que contiene todas la funciones y actividades de juegos, si se escoge el level 1. Este código
     fue creado en parte utilizando como referencia primordial las tutorias del tutor Ramses Gutiérrez. Sin embargo, el código visto fue modificado para acomodar
     las necesidades del juego por Víctor Ortiz y José Ignacio Castillo.
+    Entradas:En las entradas consisten de las teclas presionadas por el jugador
+    Salidas: Las salidas corresponden a movimientos del tanque y acciones. Al finaliza el módulo, se utilizan los datos de juego
+    para extraer los puntajes.
 """
 
 #Importación de los módulos y bibliotecas necesarias
