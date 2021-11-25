@@ -17,7 +17,6 @@ from tkinter import *
 from os import path
 import vlc
 from threading import Thread
-#from Funciones_Scoreboard import *
 from Funciones_Basicas import*
 from Control_Pantallas import *
 from Funciones_Scoreboard import *
