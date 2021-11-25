@@ -20,32 +20,26 @@ from threading import Thread
 from Funciones_Basicas import*
 from Control_Pantallas import *
 from Funciones_Scoreboard import *
-from Ingame import Score as Scr
+
 
 def Score_Board():
+
     def Ir_a_Menu():
-        data = ''
-        L_about.delete
         Result.destroy()
+
+
     Result = Toplevel()
     Result.title("Resultados Partida")
-    Result.minsize(420, 530)
+    Result.minsize(600, 800)
+    C_Scores = Canvas(Result, width = 600 , height = 800)
     Result.resizable(width=NO, height=NO)
-    L_about = Label(
-        Result,
-        text=get_datas(0),
-        font=("Consolas", 10),
-    )
-
-    Back = Button(
-        Result,
-        text="Menu Principal",
-        bg="black",
-        fg="white",
-        font="Arial",
-        command=Ir_a_Menu,
-    )
-    L_about.place(x=50, y=50)
-    Back.place(x=110, y=360)
+    C_Scores.place(x = 0, y = 0)
+    C_Scores.fondo = cargar_img('FONDOMENU.png')
+    Fondo = C_Scores.create_image(0,0,anchor = NW, image = C_Scores.fondo)
+    C_Scores.create_text(300,80, text = 'SCOREBOARD', fill = "Black", font = ("8BIT WONDER",25) )
+    C_Scores.create_text(300,250, text = get_datas(0), fill = "Black", font = ("Arial",20) )
+    C_Scores.pack()
+    
+    Result.protocol("WM_DELETE_WINDOW",Ir_a_Menu)
 
     Result.mainloop()
