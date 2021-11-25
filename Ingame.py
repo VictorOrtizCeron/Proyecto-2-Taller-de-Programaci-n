@@ -19,6 +19,7 @@ from tkinter import *
 from Funciones_Basicas import *
 from random import randint
 from threading import *
+from Funciones_Scoreboard import *
 
 #Definición de variables globales
 Tiempo = 0 #Tiempo Transcurrido
@@ -85,6 +86,7 @@ def juego():#Función principal de juego
                 print(Nombre)
                 print(Score)
                 fondo.create_text(520,550, text = ('Score Saved'), fill = "black", font = ("8BIT WONDER",20) )
+                save_data(Nombre,Score)
 
             #Crea el botón para capturar el nombre.
             Btn_enter = Button(ventana, text = 'Enter',font = ('8BIT WONDER',20), width = 7,command = get_Name)

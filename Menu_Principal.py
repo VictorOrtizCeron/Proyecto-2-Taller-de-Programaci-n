@@ -5,6 +5,7 @@ from threading import Thread
 #from Funciones_Scoreboard import *
 from Funciones_Basicas import*
 from Control_Pantallas import *
+from Scoreboard import *
 
 about = """
 
@@ -92,8 +93,8 @@ def abrir_about():
     V_about.protocol("WM_DELETE_WINDOW",destroy_window)
 
 
-def abrir_scores():
-    print("Scores")
+
+    
 
 def Empezar_Juego():
     global MenuMusic
@@ -128,7 +129,7 @@ Btn_Start2.place(x = 110, y = 400)
 Btn_about = Button(ventana, text = 'About this game',font = fuente, width = 20,command = abrir_about)
 Btn_about.place(x = 110, y = 500)
 
-Btn_Scores = Button(ventana, text = 'Scoreboard',font = fuente, width = 20,command = abrir_scores)
+Btn_Scores = Button(ventana, text = 'Scoreboard',font = fuente, width = 20,command = Score_Board)
 Btn_Scores.place(x = 110, y = 600)
 
 
