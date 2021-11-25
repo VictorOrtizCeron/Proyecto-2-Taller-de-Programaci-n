@@ -103,10 +103,18 @@ def Empezar_Juego():
     abrir_juego(ventana)
 
 def Empezar_Juego2():
-    print("Corre Juego1")
+    global MenuMusic
+    detener_cancion()
+    MenuMusic = False
+    ventana.withdraw()    
+    abrir_juego2(ventana)
 
 def Empezar_Juego3():
-    print("Corre Juego2")
+    global MenuMusic
+    detener_cancion()
+    MenuMusic = False
+    ventana.withdraw()    
+    abrir_juego3(ventana)
 
 Btn_Start = Button(ventana, text = 'Level 1',font = fuente, width = 20,command = Empezar_Juego)
 Btn_Start.place(x = 110, y = 200)
