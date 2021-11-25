@@ -32,7 +32,7 @@ def Score_Board():
     Result.resizable(width=NO, height=NO)
     L_about = Label(
         Result,
-        text=get_datas(Scr),
+        text=get_datas(0),
         font=("Consolas", 10),
     )
 
